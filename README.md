@@ -1,17 +1,16 @@
 install-and-run
 ===============
 
-Use this repository's issue tracker to post comments, bug reports, and help questions on installing and running NGDS CKAN.
+Use this repository's issue tracker to post comments, bug reports, and help questions on installing and running NGDS CKAN. Find the formal installation documentation NGDS_Installation_Documentation.docx provided in this repository, which has essential background information and other useful tips for installing a publisher or aggregator node for use in the NGDS system. Below is a quick installation guide (from the same installer script) meant for seasoned Linux users.
 
 ### Low Level Installer Script Documentation
 
 ### Introduction
 
-This documentation is written for seasoned linux users.
 
 [Here's the installer script you'll be running](https://github.com/ngds/ckanext-ngds/blob/master/installation/install-ngds.sh)
 
-As of 2/6/2014, [ckanext-ngds](https://github.com/ngds/ckanext-ngds) is in a beta production mode.  We're shooting for releasing v1.0 in April 2014.  The installer script will install the latest stable version of ckanext-ngds along with core CKAN and every other software dependency it needs to run in production except for a Java SDK.  Currently, the stable version of ckanext-ngds is written to run with core CKAN v2.0.1.  We have development branches in the ckanext-ngds Github repository which we use to keep this software up-to-date with the latest stable releases of core CKAN and these branches follow this naming convention:
+[ckanext-ngds](https://github.com/ngds/ckanext-ngds) is in a beta production mode; we're shooting for releasing v1.0 in April 2014.  The installer script will install the latest stable version of ckanext-ngds along with core CKAN and every other software dependency it needs to run in production except for a Java SDK.  Currently, the stable version of ckanext-ngds is written to run with core CKAN v2.0.1.  We have development branches in the ckanext-ngds Github repository which we use to keep this software up-to-date with the latest stable releases of core CKAN and these branches follow this naming convention:
 `upgrade-ckanvX.X.X` where `X.X.X` refers to a core CKAN release version.  These development branches do not contain stable code and will usually be merged into the master branch once they are stable.
 
 ### Installation
