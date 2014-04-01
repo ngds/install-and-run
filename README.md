@@ -43,7 +43,13 @@ Set custom parameters in the installer script:
 
 Run the installer script:
 
-    $ sudo ./install-ngds.sh (this will take a long time) 
+    $ sudo ./install-ngds.sh (this will take a long time)
+
+Troubleshooting:
+
+If `install_ngds.sh` is not recognized as an executable file, allow the current user to run it as an executable:
+
+    $ sudo chmod u+x install_ngds.sh
 
 NGDS should be being served at http://127.0.0.1/
 Login: {username: admin, password: admin}
