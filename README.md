@@ -58,5 +58,16 @@ If you find that upon visiting http://127.0.0.1/ (or http://<SERVER_NAME>) inste
 
 Go to http://127.0.0.1/organization and add a new organization named 'public'.
 
+Error Log Locations:
 The log file for CKAN is in: /var/log/apache2/
 Source code is installed in: /opt/ngds/bin/default
+CKAN error log: /var/log/apache2/ckan_default.error.log
+CKAN custom log: /var/log/apache2/ckan_default.custom.log
+Harvest gather queue log: /var/log/ckan-central-gather.log
+Harvest fetch queue log: /var/log/ckan-central-fetch.log
+Harvest run log: /var/log/ckan-central-run-harvest.log
+Celery log: /var/log/ckan-node-celery.log
+
+Geoserver and SOLR run on top of Tomcat:
+Tomcat log: /var/log/ckan-tomcat.log
+
