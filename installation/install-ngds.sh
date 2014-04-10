@@ -664,7 +664,8 @@ function install_ngds() {
 
     install_gdal
 
-    run_or_die $PYENV_DIR/bin/pip install -e git+https://$GIT_UNAME:$GIT_PWD@github.com/ngds/ckanext-ngds.git@v1.0.0#egg=ckanext-ngds
+    #run_or_die $PYENV_DIR/bin/pip install -e git+https://$GIT_UNAME:$GIT_PWD@github.com/ngds/ckanext-ngds.git@v1.0.0#egg=ckanext-ngds
+    run_or_die $PYENV_DIR/bin/pip install -e git+https://$GIT_UNAME:$GIT_PWD@github.com/ngds/ckanext-ngds.git#egg=ckanext-ngds
 
     run_or_die $PYENV_DIR/bin/pip install -r $APPS_SRC/ckanext-ngds/pip-requirements.txt    
 
