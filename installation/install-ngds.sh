@@ -124,6 +124,7 @@ function setup_env() {
 
     #Config file update script
     CONFIG_UPDATER=$SCRIPTPATH/update_config.py
+    NGDS_CONFIG_UPDATER=$SCRIPTPATH/ngds_config_file.py
 
     # Prepare temporary directory for downloads and the like
     TEMPDIR="tmp_install-ngds-$timestamp.tmp"
@@ -664,8 +665,8 @@ function install_ngds() {
 
     install_gdal
 
-    #run_or_die $PYENV_DIR/bin/pip install -e git+https://$GIT_UNAME:$GIT_PWD@github.com/ngds/ckanext-ngds.git@v1.0.0#egg=ckanext-ngds
-    run_or_die $PYENV_DIR/bin/pip install -e git+https://$GIT_UNAME:$GIT_PWD@github.com/ngds/ckanext-ngds.git#egg=ckanext-ngds
+    run_or_die $PYENV_DIR/bin/pip install -e git+https://$GIT_UNAME:$GIT_PWD@github.com/ngds/ckanext-ngds.git@v1.0.0#egg=ckanext-ngds
+    #run_or_die $PYENV_DIR/bin/pip install -e git+https://$GIT_UNAME:$GIT_PWD@github.com/ngds/ckanext-ngds.git#egg=ckanext-ngds
 
     run_or_die $PYENV_DIR/bin/pip install -r $APPS_SRC/ckanext-ngds/pip-requirements.txt    
 
@@ -727,7 +728,7 @@ function configure_ngds() {
     NGDS_SRC=$APPS_SRC/ckanext-ngds
     NGDS_CUSTOM_PUBLIC=$NGDS_CUSTOM_PATH/public
 
-    $PYENV_DIR/bin/python $APPS_SRC/ckanext-ngds/scripts/ngds_config_file.py -f $deployment_file -d $deployment_type -r $NGDS_SRC
+    $PYENV_DIR/bin/python NGDS_CONFIG_UPDATER -f $deployment_file -d $deployment_type -r $NGDS_SRC
 
     #$PYENV_DIR/bin/python /home/ngds/install/configobjtest.py -f $deployment_file -d $deployment_type -r $NGDS_SRC
 
