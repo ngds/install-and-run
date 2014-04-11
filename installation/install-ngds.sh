@@ -728,7 +728,7 @@ function configure_ngds() {
     NGDS_SRC=$APPS_SRC/ckanext-ngds
     NGDS_CUSTOM_PUBLIC=$NGDS_CUSTOM_PATH/public
 
-    $PYENV_DIR/bin/python NGDS_CONFIG_UPDATER -f $deployment_file -d $deployment_type -r $NGDS_SRC
+    $PYENV_DIR/bin/python $NGDS_CONFIG_UPDATER -f $deployment_file -d $deployment_type -r $NGDS_SRC
 
     #$PYENV_DIR/bin/python /home/ngds/install/configobjtest.py -f $deployment_file -d $deployment_type -r $NGDS_SRC
 
