@@ -10,7 +10,7 @@ Use this repository's issue tracker to post comments, bug reports, and help ques
 
 [Here's the installer script you'll be running](https://github.com/ngds/install-and-run/blob/master/installation/install-ngds.sh)
 
-[ckanext-ngds](https://github.com/ngds/ckanext-ngds) is in a beta production mode; we're shooting for releasing v1.0 in April 2014.  The installer script will install the latest stable version of ckanext-ngds along with core CKAN and every other software dependency it needs to run in production except for a Java SDK.  Currently, the stable version of ckanext-ngds is written to run with core CKAN v2.0.1.  We have development branches in the ckanext-ngds Github repository which we use to keep this software up-to-date with the latest stable releases of core CKAN and these branches follow this naming convention:
+[ckanext-ngds](https://github.com/ngds/ckanext-ngds) is in a beta production mode; we're shooting for releasing v1.0 in April 2014.  The installer script will install the latest stable version of ckanext-ngds along with core CKAN and every other software dependency it needs to run in production.  Currently, the stable version of ckanext-ngds is developed to run with core CKAN v2.0.4.  We have development branches in the ckanext-ngds Github repository which we use to keep this software up-to-date with the latest stable releases of core CKAN and these branches follow this naming convention:
 `upgrade-ckanvX.X.X` where `X.X.X` refers to a core CKAN release version.  These development branches do not contain stable code and will usually be merged into the master branch once they are stable.
 
 ### Installation
@@ -28,7 +28,7 @@ Download NGDS:
     $ cd ~
     $ mkdir tmp
     $ cd tmp
-    $ git clone https://github.com/ngds/ckanext-ngds.git
+    $ git clone https://github.com/ngds/install-and-run.git
     $ cd ckanext-ngds/installation
 
 Set custom parameters in the installer script:
@@ -39,6 +39,7 @@ Set custom parameters in the installer script:
     SMTP_STARTTLS
     SMTP_USER
     SMTP_PASSWORD
+    SMTP_MAIL_FROM
     GEOSERVER_REST_URL
 
 Run the installer script:
