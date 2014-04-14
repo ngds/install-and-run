@@ -78,7 +78,7 @@ node_params = [
     ("ngds.bulk_upload_dir", "/home/ngds/work/bulkupload/"),
     ("ngds.client_config_file", args.root + "/ckanclient.cfg"),
     ("ckan.site_logo", "/assets/nib.png"),
-	("ckan.favicon", "/favicon/ngds-favicon.ico")
+    ("ckan.favicon", "/favicon/ngds-favicon.ico")
 ]
 
 node_plugins = 'stats json_preview recline_preview datastore spatial_metadata spatial_query datastorer csw metadata geoserver ngdsui'
@@ -89,7 +89,7 @@ central_params = [
     ("ngds.logo_text", "CONTRIBUTING GEOTHERMAL DATA"),
     ("ngds.home_images_config_path", args.root + "/home_images.cfg"),
     ("ckan.site_logo", "/assets/logo.png"),
-	("ckan.favicon", "/favicon/ngds-favicon.ico")
+    ("ckan.favicon", "/favicon/ngds-favicon.ico")
 ]
 
 central_plugins = 'stats json_preview recline_preview datastore spatial_metadata spatial_query spatial_harvest_metadata_api csw_harvester csw metadata ngds_harvester geoserver ngdsui harvest ckan_harvester'
