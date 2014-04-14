@@ -121,6 +121,7 @@ function setup_env() {
     # Absolute path to this script
     SCRIPT=$(readlink -f "$0")
     SCRIPTPATH=$(dirname "$SCRIPT")
+    WORKING_DIR=$SCRIPTPATH
 
     #Config file update script
     CONFIG_UPDATER=$SCRIPTPATH/update_config.py
@@ -1046,7 +1047,7 @@ ENDSOLRXML
 
     #TODO: wget the installation/schema.xml from git directly to avoid having
     # to install ckanext-ngds first.
-    cp $APPS/bin/default/src/ckanext-ngds/installation/schema.xml $SOLR_HOME/collection1/conf/schema.xml
+    cp $WORKING_DIR/schema.xml $SOLR_HOME/collection1/conf/schema.xml
 }
 
 # -------------------------------------------------------------------------------------------------
