@@ -29,7 +29,7 @@ Download NGDS:
     $ mkdir tmp
     $ cd tmp
     $ git clone https://github.com/ngds/install-and-run.git
-    $ cd ckanext-ngds/installation
+    $ cd install-and-run/installation
 
 Set custom parameters in the installer script:
 
