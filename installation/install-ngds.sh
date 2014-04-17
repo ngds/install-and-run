@@ -193,6 +193,30 @@ function setup_env() {
     # Connection parameters for Geoserver, in the form:
     # "geoserver://{username}:{password}@{geoserver_rest_api_url}"
     GEOSERVER_REST_URL="geoserver://admin:geoserver@localhost:8080/geoserver/rest"
+
+    # PyCSW Configuration -------------------------------------------------------------------------
+    IDENTIFICATION_TITLE='undefined'
+    IDENTIFICATION_ABSTRACT='undefined'
+    IDENTIFICATION_KEYWORDS='undefined'
+    IDENTIFICATION_KEYWORDS_TYPE='undefined'
+    IDENTIFICATION_FEES='undefined'
+    IDENTIFICATION_ACCESSCONSTRAINTS='undefined'
+    PROVIDER_NAME='undefined'
+    PROVIDER_URL='undefined'
+    CONTACT_NAME='undefined'
+    CONTACT_POSITION='undefined'
+    CONTACT_ADDRESS='undefined'
+    CONTACT_CITY='undefined'
+    CONTACT_STATEORPROVINCE='undefined'
+    CONTACT_POSTALCODE='undefined'
+    CONTACT_COUNTRY='undefined'
+    CONTACT_PHONE='undefined'
+    CONTACT_FAX='undefined'
+    CONTACT_EMAIL='undefined'
+    CONTACT_URL='undefined'
+    CONTACT_HOURS='undefined'
+    CONTACT_INSTRUCTIONS='undefined'
+    CONTACT_ROLE='undefined'
 }
 
 # -------------------------------------------------------------------------------------------------
@@ -1271,6 +1295,28 @@ function install_csw_server() {
     $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "server" -k "home" -v "$CSW_SERVER_HOME"
     $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "repository" -k "database" -v "$CSW_DB_PARAMS"
     $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "server" -k "url" -v "$PYCSW_URL"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "identification_title" -v "$IDENTIFICATION_TITLE"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "identification_abstract" -v "$IDENTIFICATION_ABSTRACT"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "identification_keywords" -v "$IDENTIFICATION_KEYWORDS"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "identification_keywords_type" -v "$IDENTIFICATION_KEYWORDS_TYPE"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "identification_fees" -v "$IDENTIFICATION_FEES"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "identification_accessconstraints" -v "$IDENTIFICATION_ACCESSCONSTRAINTS"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "provider_name" -v "$PROVIDER_NAME"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "provider_url" -v "$PROVIDER_URL"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "contact_name" -v "$CONTACT_NAME"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "contact_position" -v "$CONTACT_POSITION"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "contact_address" -v "$CONTACT_ADDRESS"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "contact_city" -v "$CONTACT_CITY"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "contact_stateorprovince" -v "$CONTACT_STATEORPROVINCE"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "contact_postalcode" -v "$CONTACT_POSTALCODE"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "contact_country" -v "$CONTACT_COUNTRY"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "contact_phone" -v "$CONTACT_PHONE"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "contact_fax" -v "$CONTACT_FAX"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "contact_email" -v "$CONTACT_EMAIL"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "contact_url" -v "$CONTACT_URL"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "contact_hours" -v "$CONTACT_HOURS"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "contact_instructions" -v "$CONTACT_INSTRUCTIONS"
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $PYCSW_CONFIG -s "metadata:main" -k "contact_role" -v "$CONTACT_ROLE"
 
     run_or_die ln -s $PYENV_DIR/src/pycsw/default.cfg $CKAN_ETC/default/pycsw.cfg
 
