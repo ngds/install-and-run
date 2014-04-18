@@ -1270,14 +1270,21 @@ function check_release() {
 # Install Java
 
 function install_java() {
-    sudo apt-get -y update
-    sudo apt-get -y upgrade
-    sudo apt-get -y purge openjdk*
-    sudo apt-get -y install software-properties-common python-software-properties git git-core
-    sudo add-apt-repository -y ppa:webupd8team/java
-    sudo apt-get -y update
-    sudo apt-get install curl
-    sudo apt-get -y install oracle-java6-installer
+    # Install Java
+    run_or_die apt-get -y update
+    run_or_die apt-get -y upgrade
+    run_or_die apt-get -y purge openjdk*
+    run_or_die apt-get -y install software-properties-common python-software-properties git git-core
+    run_or_die add-apt-repository -y ppa:webupd8team/java
+    run_or_die apt-get -y update
+    run_or_die apt-get install curl
+    run_or_die apt-get -y install oracle-java6-installer
+
+    # Install JAI
+    cd /usr/lib/jvm/java-6-oracle
+    run_or_die curl -O http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-linux-amd64-jdk.bin
+    run_or_die chmod u+x jai-1_1_3-lib-linux-amd64-jdk.bin
+    run_or_die ./jai-1_1_3-lib-linux-amd64-jdk.bin
 }
 
 # -------------------------------------------------------------------------------------------------
