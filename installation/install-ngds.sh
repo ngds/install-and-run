@@ -1278,7 +1278,7 @@ function install_java() {
     run_or_die add-apt-repository -y ppa:webupd8team/java
     run_or_die apt-get -y update
     run_or_die apt-get install curl
-    run_or_die apt-get -y install oracle-java6-installer
+    sudo apt-get -y install oracle-java6-installer
 
     # Install JAI
     run_or_die curl -O http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-linux-amd64-jdk.bin
