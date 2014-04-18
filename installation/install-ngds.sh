@@ -1281,10 +1281,12 @@ function install_java() {
     run_or_die apt-get -y install oracle-java6-installer
 
     # Install JAI
-    cd /usr/lib/jvm/java-6-oracle
     run_or_die curl -O http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-linux-amd64-jdk.bin
-    run_or_die chmod u+x jai-1_1_3-lib-linux-amd64-jdk.bin
-    run_or_die ./jai-1_1_3-lib-linux-amd64-jdk.bin
+    run_or_die cp jai-1_1_3-lib-linux-amd64-jdk.bin $JAVA_HOME
+    run_or_die chmod u+x $JAVA_HOME/jai-1_1_3-lib-linux-amd64-jdk.bin
+    run_or_die cd $JAVA_HOME
+    sudo ./jai-1_1_3-lib-linux-amd64-jdk.bin
+    run_or_die cd $WORKING_DIR
 }
 
 # -------------------------------------------------------------------------------------------------
@@ -1368,11 +1370,11 @@ function run() {
 
     sudo apt-get -y upgrade
 
+    setup_env
+
     install_java
 
     install_prereqs
-
-    setup_env
 
     install_ckan
 
