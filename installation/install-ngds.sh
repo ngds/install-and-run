@@ -95,7 +95,59 @@ function configure_properties() {
 
     #Server Name details for HTTP server to register with.
     SERVER_NAME=127.0.0.1
-    SERVER_NAME_ALIAS=localhost    
+    SERVER_NAME_ALIAS=localhost
+
+    # NGDS contact email
+    NGDS_CONTACT_EMAIL="undefined"
+
+    # User defined variables for email server:
+    # SMTP server to connect to when sending emails
+    # Ex: smtp.gmail.com:587
+    SMTP_SERVER="undefined"
+
+    # Whether or not to use STARTTLS when connecting to the SMTP server
+    # Ex: True
+    SMTP_STARTTLS="undefined"
+
+    # Username used to authenticate with the SMTP server
+    # Ex: your_username@gmail.com
+    SMTP_USER="undefined"
+
+    # Password used to authenticate with the SMTP server
+    # Ex: your_password
+    SMTP_PASSWORD="undefined"
+
+    # Email address used by CKAN to send emails
+    # Ex: user@gmail.com
+    SMTP_MAIL_FROM="undefined"
+
+    # Connection parameters for Geoserver, in the form:
+    # "geoserver://{username}:{password}@{geoserver_rest_api_url}"
+    GEOSERVER_REST_URL="geoserver://admin:geoserver@localhost:8080/geoserver/rest"
+
+    # PyCSW Configuration -------------------------------------------------------------------------
+    IDENTIFICATION_TITLE='undefined'
+    IDENTIFICATION_ABSTRACT='undefined'
+    IDENTIFICATION_KEYWORDS='undefined'
+    IDENTIFICATION_KEYWORDS_TYPE='undefined'
+    IDENTIFICATION_FEES='undefined'
+    IDENTIFICATION_ACCESSCONSTRAINTS='undefined'
+    PROVIDER_NAME='undefined'
+    PROVIDER_URL='undefined'
+    CONTACT_NAME='undefined'
+    CONTACT_POSITION='undefined'
+    CONTACT_ADDRESS='undefined'
+    CONTACT_CITY='undefined'
+    CONTACT_STATEORPROVINCE='undefined'
+    CONTACT_POSTALCODE='undefined'
+    CONTACT_COUNTRY='undefined'
+    CONTACT_PHONE='undefined'
+    CONTACT_FAX='undefined'
+    CONTACT_EMAIL='undefined'
+    CONTACT_URL='undefined'
+    CONTACT_HOURS='undefined'
+    CONTACT_INSTRUCTIONS='undefined'
+    CONTACT_ROLE='undefined'
 }
 
 # -------------------------------------------------------------------------------------------------
@@ -168,55 +220,6 @@ function setup_env() {
     sudo mkdir -p $SOLR_LIB $GEOSERVER_CATALINA_BASE $NGDS_SCRIPTS $GEOSERVER_LIB
     sudo chown -R $MYUSERID:$MYUSERID $SOLR_LIB $NGDS_SCRIPTS $GEOSERVER_LIB
     sudo chown -R $MYUSERID:$MYUSERID $GEOSERVER_CATALINA_BASE
-
-    # User defined variables for email server:
-    # SMTP server to connect to when sending emails
-    # Ex: smtp.gmail.com:587
-    SMTP_SERVER="undefined"
-
-    # Whether or not to use STARTTLS when connecting to the SMTP server
-    # Ex: True
-    SMTP_STARTTLS="undefined"
-
-    # Username used to authenticate with the SMTP server
-    # Ex: your_username@gmail.com
-    SMTP_USER="undefined"
-
-    # Password used to authenticate with the SMTP server
-    # Ex: your_password
-    SMTP_PASSWORD="undefined"
-
-    # Email address used by CKAN to send emails
-    # Ex: user@gmail.com
-    SMTP_MAIL_FROM="undefined"
-
-    # Connection parameters for Geoserver, in the form:
-    # "geoserver://{username}:{password}@{geoserver_rest_api_url}"
-    GEOSERVER_REST_URL="geoserver://admin:geoserver@localhost:8080/geoserver/rest"
-
-    # PyCSW Configuration -------------------------------------------------------------------------
-    IDENTIFICATION_TITLE='undefined'
-    IDENTIFICATION_ABSTRACT='undefined'
-    IDENTIFICATION_KEYWORDS='undefined'
-    IDENTIFICATION_KEYWORDS_TYPE='undefined'
-    IDENTIFICATION_FEES='undefined'
-    IDENTIFICATION_ACCESSCONSTRAINTS='undefined'
-    PROVIDER_NAME='undefined'
-    PROVIDER_URL='undefined'
-    CONTACT_NAME='undefined'
-    CONTACT_POSITION='undefined'
-    CONTACT_ADDRESS='undefined'
-    CONTACT_CITY='undefined'
-    CONTACT_STATEORPROVINCE='undefined'
-    CONTACT_POSTALCODE='undefined'
-    CONTACT_COUNTRY='undefined'
-    CONTACT_PHONE='undefined'
-    CONTACT_FAX='undefined'
-    CONTACT_EMAIL='undefined'
-    CONTACT_URL='undefined'
-    CONTACT_HOURS='undefined'
-    CONTACT_INSTRUCTIONS='undefined'
-    CONTACT_ROLE='undefined'
 }
 
 # -------------------------------------------------------------------------------------------------
@@ -781,6 +784,8 @@ function configure_ngds() {
     $PYENV_DIR/bin/python $CONFIG_UPDATER -f $deployment_file -k "extra_public_paths" -v "$NGDS_CUSTOM_PUBLIC"
 
     $PYENV_DIR/bin/python $CONFIG_UPDATER -f $deployment_file -k "ckan.locales_offered" -v "en es de"
+
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $deployment_file -k "ngds.contact_email" -v "$NGDS_CONTACT_EMAIL"
 
     $PYENV_DIR/bin/python $CONFIG_UPDATER -f $deployment_file -k "smtp.server" -v "$SMTP_SERVER"
     $PYENV_DIR/bin/python $CONFIG_UPDATER -f $deployment_file -k "smtp.starttls" -v "$SMTP_STARTTLS"
