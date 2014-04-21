@@ -80,3 +80,14 @@ Error Log Locations:
     Geoserver and SOLR run on top of Tomcat:
     Tomcat log: /var/log/ckan-tomcat.log
 
+### Changelog
+##### v1.0.1 - 2014/04/21
+- Fixed map search bug where the user could only perform one search query.
+- Make CSV error failure more graceful.
+- Added custom NGDS favicon.
+- Added search hints link.
+- Changed some of the contributor organization info.
+- No previews for unsupported data.
+- Fixed ratings issue.
+- Custom NGDS activity streams.
+- Add option for contact email in installation script.
