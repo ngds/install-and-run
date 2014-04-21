@@ -42,6 +42,30 @@ Set custom parameters in the installer script:
     SMTP_MAIL_FROM
     GEOSERVER_REST_URL
 
+    # Customize CSW
+    IDENTIFICATION_TITLE
+    IDENTIFICATION_ABSTRACT
+    IDENTIFICATION_KEYWORDS
+    IDENTIFICATION_KEYWORDS_TYPE
+    IDENTIFICATION_FEES
+    IDENTIFICATION_ACCESSCONSTRAINTS
+    PROVIDER_NAME
+    PROVIDER_URL
+    CONTACT_NAME
+    CONTACT_POSITION
+    CONTACT_ADDRESS
+    CONTACT_CITY
+    CONTACT_STATEORPROVINCE
+    CONTACT_POSTALCODE
+    CONTACT_COUNTRY
+    CONTACT_PHONE
+    CONTACT_FAX
+    CONTACT_EMAIL
+    CONTACT_URL
+    CONTACT_HOURS
+    CONTACT_INSTRUCTIONS
+    CONTACT_ROLE
+
 Run the installer script:
 
     $ sudo ./install-ngds.sh (this will take a long time)
@@ -80,3 +104,14 @@ Error Log Locations:
     Geoserver and SOLR run on top of Tomcat:
     Tomcat log: /var/log/ckan-tomcat.log
 
+### Changelog
+##### v1.0.1 - 2014/04/21
+- Fixed map search bug where the user could only perform one search query.
+- Make CSV error failure more graceful.
+- Added custom NGDS favicon.
+- Added search hints link.
+- Changed some of the contributor organization info.
+- No previews for unsupported data.
+- Fixed ratings issue.
+- Custom NGDS activity streams.
+- Add option for contact email in installation script.
