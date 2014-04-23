@@ -1696,7 +1696,7 @@ for the ngds user) and clone the git repository:</p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   15.0pt'><span class=Courier><span style='font-size:10.0pt'>%  cd tmp</span></span></p>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  15.0pt'><span class=Courier><span style='font-size:10.0pt'>%  git clone https://github.com/ngds/ckanext-ngds.git</span></span></p>
+  15.0pt'><span class=Courier><span style='font-size:10.0pt'>%  git clone https://github.com/ngds/install-and-run.git</span></span></p>
   </td>
  </tr>
 </table>
@@ -1716,7 +1716,7 @@ following changes:</p>
  style='border-collapse:collapse;border:none'>
  <tr>
   <td width=638 valign=top style='width:6.65in;border:solid windowtext 1.0pt;
-  background:#F2F2F2;padding:0in 5.4pt 0in 5.4pt'><pre><span class=Courier>%  cd ckanext-ngds/installation</span></pre>
+  background:#F2F2F2;padding:0in 5.4pt 0in 5.4pt'><pre><span class=Courier>%  cd install-and-run/installation</span></pre>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
   15.0pt'><span class=Courier><span style='font-size:10.0pt'>%  sudo nano install-ngds.sh</span></span></p>
   </td>
@@ -1774,9 +1774,11 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&
 </span></span>GEOSERVER_REST_URL = Which contains the connection parameters for
 Geoserver, in the form:</p>
 
+<p class=MsoListBullet2CxSpFirst>&quot;geoserver://{username}:{password}@{geoserver_rest_url}&quot;</p>
+    
 <p class=MsoListBullet style='margin-bottom:6.0pt'><span style='font-family:
 Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>&quot;geoserver://{username}:{password}@{geoserver_rest_url}&quot;</p>
+</span></span># Customize CSW: Here, the user may enter metadata for the custom CSW which accompanies the NIAB installation.</p>    
 
 <p class=MsoNormal>The <b>site_url</b> should indicate the exact web-facing
 server or IP address on which this NGDSNGDS CKAN node is to be accessible; this
