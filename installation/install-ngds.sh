@@ -821,8 +821,13 @@ function configure_ngds() {
     
     run_or_die $PYENV_DIR/bin/paster --plugin=ckanext-ngds ngds initdb -c $deployment_file
 
+    # Create 'admin' user and give 'admin' system administrator privileges
     $PYENV_DIR/bin/paster --plugin=ckan user add $ADMIN_NAME password=$ADMIN_PWD email=$ADMIN_EMAIL -c $deployment_file
     $PYENV_DIR/bin/paster --plugin=ckan sysadmin add $ADMIN_NAME -c $deployment_file 
+
+    # Create 'harvest' user and give 'harvest' system administrator privileges
+    $PYENV_DIR/bin/paster --plugin=ckan user add harvest password=harvest -c $deployment_file
+    $PYENV_DIR/bin/paster --plugin=ckan sysadmin add harvest -c $deployment_file
 }
 
 
