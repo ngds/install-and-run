@@ -1301,8 +1301,18 @@ function install_java() {
 function install_csw_server() {
     # Install PyCSW v1.8.0
     sudo $PYENV_DIR/bin/pip install -e git+https://github.com/geopython/pycsw.git@1.8.0#egg=pycsw
+
     # Build database for PyCSW in PostgreSQL
     run_or_die sudo -u postgres createdb -O $pg_id_for_pycsw $pg_db_for_pycsw -E utf-8
+
+    # Install PostGIS into PyCSW database
+    run_or_die sudo -u postgres psql -d $pg_db_for_pycsw -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql
+    run_or_die sudo -u postgres psql -d $pg_db_for_pycsw -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql
+
+    echo "ALTER TABLE spatial_ref_sys OWNER TO $pg_id_for_pycsw;" > $TEMPDIR/grants_on_template_postgis.sql
+    echo "ALTER TABLE geometry_columns OWNER TO $pg_id_for_pycsw;" >> $TEMPDIR/grants_on_template_postgis.sql
+
+    run_or_die sudo -u postgres psql -d $pg_db_for_pycsw -f $TEMPDIR/grants_on_template_postgis.sql
 
     # Make PyCSW configuration file
     run_or_die cp $PYENV_DIR/src/pycsw/default-sample.cfg $PYENV_DIR/src/pycsw/default.cfg
