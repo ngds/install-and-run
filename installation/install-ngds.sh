@@ -600,7 +600,7 @@ function install_datastorer() {
 #
 function install_datastorecsw() {
 
-    run_or_die $PYENV_DIR/bin/pip install -e git+https://github.com/ngds/ckanext-datastorecsw.git@v0.0.1#egg=ckanext-datastorecsw
+    run_or_die $PYENV_DIR/bin/pip install -e git+https://github.com/ngds/ckanext-datastorecsw.git@0.0.1#egg=ckanext-datastorecsw
     run_or_die $PYENV_DIR/bin/pip install -r $APPS_SRC/ckanext-datastorecsw/requirements.txt
 
     #Add datastorecsw to the list of plugins
