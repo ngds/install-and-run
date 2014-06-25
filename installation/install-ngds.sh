@@ -735,12 +735,12 @@ function install_gdal() {
     run_or_die sudo apt-get update
     run_or_die sudo apt-get -y --force-yes install libgdal-dev gdal-bin
 
-    run_or_die $PYENV_DIR/bin/pip install --no-install GDAL
+    run_or_die $PYENV_DIR/bin/pip install --no-install GDAL==1.10.0
 
     pushd $PYENV_DIR/build/GDAL > /dev/null
     $PYENV_DIR/bin/python  setup.py build_ext --include-dirs=/usr/include/gdal/
 
-    run_or_die $PYENV_DIR/bin/pip install --no-download GDAL
+    run_or_die $PYENV_DIR/bin/pip install --no-download GDAL==1.10.0
     popd > /dev/null
 }
 
