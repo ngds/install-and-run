@@ -594,6 +594,20 @@ function install_datastorer() {
     ##TODO: Need to check installing supervisor module as described in the installation instructions.
 }
 
+# -------------------------------------------------------------------------------------------------
+# Setup DatastoreCSW extension
+# Refer to the installation instructions https://github.com/ngds/ckanext-datastorecsw
+#
+function install_datastorecsw() {
+
+    run_or_die $PYENV_DIR/bin/pip install -e git+https://github.com/ngds/ckanext-datastorecsw.git@0.0.2#egg=ckanext-datastorecsw
+    run_or_die $PYENV_DIR/bin/pip install -r $APPS_SRC/ckanext-datastorecsw/requirements.txt
+
+    #Add datastorecsw to the list of plugins
+    $PYENV_DIR/bin/python $CONFIG_UPDATER -f $CKAN_ETC/default/development.ini -a -k ckan.plugins -v "datastorecsw"
+
+    run_or_die echo "Finished installing ckanext-datastorecsw."
+}
 
 # -------------------------------------------------------------------------------------------------
 # Setup Postgis and spatial.
@@ -721,12 +735,12 @@ function install_gdal() {
     run_or_die sudo apt-get update
     run_or_die sudo apt-get -y --force-yes install libgdal-dev gdal-bin
 
-    run_or_die $PYENV_DIR/bin/pip install --no-install GDAL
+    run_or_die $PYENV_DIR/bin/pip install --no-install GDAL==1.10.0
 
     pushd $PYENV_DIR/build/GDAL > /dev/null
     $PYENV_DIR/bin/python  setup.py build_ext --include-dirs=/usr/include/gdal/
 
-    run_or_die $PYENV_DIR/bin/pip install --no-download GDAL
+    run_or_die $PYENV_DIR/bin/pip install --no-download GDAL==1.10.0
     popd > /dev/null
 }
 
@@ -1225,7 +1239,7 @@ sudo chmod 755 $NGDS_SCRIPTS/ckan-pycsw-server.conf
 cp $NGDS_SCRIPTS/ckan-pycsw-server.conf /etc/init/
 service ckan-pycsw-server start
 
-# Upstart job for loading data into PyCSW
+# Upstart job for loading harvested data into PyCSW
 cat > $NGDS_SCRIPTS/ckan-pycsw-loader.conf <<EOF
 #!/bin/bash
 start on runlevel [2345]
@@ -1238,6 +1252,20 @@ EOF
 sudo chmod 755 $NGDS_SCRIPTS/ckan-pycsw-loader.conf
 cp $NGDS_SCRIPTS/ckan-pycsw-loader.conf /etc/init/
 service ckan-pycsw-loader start
+
+# Upstart job for loading datastore data into PyCSW
+cat > $NGDS_SCRIPTS/ckan-datastore-pycsw-loader.conf <<EOF
+#!/bin/bash
+start on runlevel [2345]
+stop on runlevel [!2345]
+respawn
+exec $PYENV_DIR/bin/paster --plugin=ckanext-datastorecsw datastore-pycsw load -p $PRODUCTION_PYCSW_CONFIG >> /var/log/ckan-datastore-pycsw-loader.log 2>&1
+post-stop exec sleep 3600
+EOF
+
+sudo chmod 755 $NGDS_SCRIPTS/ckan-datastore-pycsw-loader.conf
+cp $NGDS_SCRIPTS/ckan-datastore-pycsw-loader.conf /etc/init/
+service ckan-datastore-pycsw-loader start
 }
 
 # -------------------------------------------------------------------------------------------------
@@ -1398,6 +1426,8 @@ function run() {
     install_datastore
 
     install_datastorer
+
+    install_datastorecsw
 
     install_postgis
 
