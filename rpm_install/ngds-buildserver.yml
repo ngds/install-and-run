@@ -1,0 +1,242 @@
+---
+- hosts: build
+  user: root
+
+  vars_prompt:
+   - name: version
+     prompt: "Ckan Version"
+     private: False
+   - name: iteration
+     prompt: "Iteration"
+     private: False
+
+  tasks:
+    - name: remove old code
+      action: file path=/usr/lib/ckan state=absent
+
+    - name: remove old datapusher
+      action: file path=/usr/lib/datapusher state=absent
+
+    - name: install epel
+      action: command creates=/etc/yum.repos.d/epel.repo rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+
+    - name: make sure packages are installed
+      action: yum pkg={{ item }} state=installed
+      with_items:
+        - htop
+        - rubygems
+        - python-virtualenv
+        - python-setuptools
+        - python-devel
+        - ruby-devel
+        - libxml2-devel
+        - libxslt-devel
+        - rpmdevtools
+        - gcc
+        - gcc-c++
+        - make
+        - bison
+        - httpd
+        - createrepo
+        - mod_wsgi
+        - git
+        - postgresql91
+        - postgresql91-libs
+        - postgresql91-devel
+        - libselinux-python
+
+    - name: install fpm
+      action: command gem install -v 0.4.21 fpm creates=/usr/bin/fpm 
+
+    - name: get ckan
+      # action: git repo=https://github.com/ckan/ckan dest=/usr/lib/ckan/src/ckan version=master
+      # ckan git repo has some submodule weirdness. work better with straight git clone.
+      action: command {{ item }}
+      with_items:
+        - mkdir -p /usr/lib/ckan/src
+        - chdir=/usr/lib/ckan/src git clone https://github.com/ckan/ckan
+        - chdir=/usr/lib/ckan/src/ckan git checkout ckan-2.2
+
+    - name: get pip
+      action: easy_install name=pip
+
+    - name: install requirements and make virtualenv
+      action: pip requirements=/usr/lib/ckan/src/ckan/requirements.txt virtualenv=/usr/lib/ckan/ virtualenv_site_packages=yes
+      environment:
+        PATH: /usr/pgsql-9.1/bin:{{ ansible_env.PATH }}
+
+    - name: run setup.py develop for ckan
+      action: command chdir=/usr/lib/ckan/src/ckan/ ../../bin/python setup.py develop
+
+    - name: get harvest extension
+      action: git repo=https://github.com/ckan/ckanext-harvest dest=/usr/lib/ckan/src/ckanext-harvest version=stable
+
+    - name: install requirements for harvest
+      action: pip requirements=/usr/lib/ckan/src/ckanext-harvest/pip-requirements.txt virtualenv=/usr/lib/ckan/
+
+    - name: run setup.py develop for harvest
+      action: command chdir=/usr/lib/ckan/src/ckanext-harvest/ ../../bin/python setup.py develop
+
+    - name: get spatial extension
+      action: git repo=https://github.com/ckan/ckanext-spatial dest=/usr/lib/ckan/src/ckanext-spatial version=stable
+
+    - name: install requirements for spatial
+      action: pip requirements=/usr/lib/ckan/src/ckanext-spatial/pip-requirements.txt virtualenv=/usr/lib/ckan/
+
+    - name: run setup.py develop for spatial
+      action: command chdir=/usr/lib/ckan/src/ckanext-spatial/ ../../bin/python setup.py develop
+
+    - name: get pages extension
+      action: git repo=https://github.com/ckan/ckanext-pages dest=/usr/lib/ckan/src/ckanext-pages
+
+    - name: run setup.py develop for pages
+      action: command chdir=/usr/lib/ckan/src/ckanext-pages/ ../../bin/python setup.py develop
+
+    - name: get ngds extension
+      action: git repo=https://github.com/FuhuXia/ckanext-ngds dest=/usr/lib/ckan/src/ckanext-ngds version=for-rpm
+
+    - name: install requirements for ngds
+      action: pip requirements=/usr/lib/ckan/src/ckanext-ngds/requirements.txt virtualenv=/usr/lib/ckan/
+
+    - name: run setup.py develop for ngds
+      action: command chdir=/usr/lib/ckan/src/ckanext-ngds/ ../../bin/python setup.py develop
+
+    - name: get mapsearch extension
+      action: git repo=https://github.com/FuhuXia/ckanext-mapsearch dest=/usr/lib/ckan/src/ckanext-mapsearch version=for-rpm
+
+    - name: install requirements for mapsearch
+      action: pip requirements=/usr/lib/ckan/src/ckanext-mapsearch/requirements.txt virtualenv=/usr/lib/ckan/
+
+    - name: run setup.py develop for mapsearch
+      action: command chdir=/usr/lib/ckan/src/ckanext-mapsearch/ ../../bin/python setup.py develop
+
+    - name: get ogcpreview extension
+      action: git repo=https://github.com/ngds/ckanext-ogcpreview dest=/usr/lib/ckan/src/ckanext-ogcpreview
+
+    - name: install requirements for ogcpreview
+      action: pip requirements=/usr/lib/ckan/src/ckanext-ogcpreview/requirements.txt virtualenv=/usr/lib/ckan/
+
+    - name: run setup.py develop for ogcpreview
+      action: command chdir=/usr/lib/ckan/src/ckanext-ogcpreview/ ../../bin/python setup.py develop
+
+    - name: get datastorecsw extension
+      action: git repo=https://github.com/ngds/ckanext-datastorecsw dest=/usr/lib/ckan/src/ckanext-datastorecsw
+
+    - name: install requirements for datastorecsw
+      action: pip requirements=/usr/lib/ckan/src/ckanext-datastorecsw/requirements.txt virtualenv=/usr/lib/ckan/
+
+    - name: run setup.py develop for datastorecsw
+      action: command chdir=/usr/lib/ckan/src/ckanext-datastorecsw/ ../../bin/python setup.py develop
+
+    - name: get metadata extension
+      action: git repo=https://github.com/FuhuXia/ckanext-metadata dest=/usr/lib/ckan/src/ckanext-metadata version=for-rpm
+
+    - name: install requirements for metadata
+      action: pip requirements=/usr/lib/ckan/src/ckanext-metadata/requirements.txt virtualenv=/usr/lib/ckan/
+
+    - name: run setup.py develop for metadata
+      action: command chdir=/usr/lib/ckan/src/ckanext-metadata/ ../../bin/python setup.py develop
+
+    - name: get geoserver extension
+      action: git repo=https://github.com/FuhuXia/ckanext-geoserver dest=/usr/lib/ckan/src/ckanext-geoserver version=for-rpm
+
+    - name: install requirements for geoserver
+      action: pip requirements=/usr/lib/ckan/src/ckanext-geoserver/requirements.txt virtualenv=/usr/lib/ckan/
+
+    - name: run setup.py develop for geoserver
+      action: command chdir=/usr/lib/ckan/src/ckanext-geoserver/ ../../bin/python setup.py develop
+
+    - name: remove psycopg2
+      action: pip name=psycopg2 virtualenv=/usr/lib/ckan/ state=absent
+      environment:
+        PATH: /usr/pgsql-9.1/bin:{{ ansible_env.PATH }}
+
+    - name: get ckan datapusher
+      action: git repo=https://github.com/ckan/datapusher.git dest=/usr/lib/datapusher/src/datapusher version=stable
+
+    - name: install datapusher requirements and make virtualenv
+      action: pip requirements=/usr/lib/datapusher/src/datapusher/requirements.txt virtualenv=/usr/lib/datapusher/ virtualenv_site_packages=yes
+
+    - name: run setup.py develop for datapusher
+      action: command chdir=/usr/lib/datapusher/src/datapusher/ ../../bin/python setup.py develop
+
+    - name: install supervisor
+      action: pip name=supervisor virtualenv=/usr/lib/ckan/
+
+    - name: remove old repo
+      action: file path=/var/www/html/ngds state=absent
+
+    - name: create directories
+      action: file path={{ item }} state=directory
+      with_items:
+        - /etc/ckan
+        - /var/www/html/ngds-repo
+
+    - name: default apache removed
+      action: file path=/etc/httpd/conf.d/welcome.conf state=absent
+
+    - name: copy all needed files
+      action: copy src={{ item }} dest=/{{ item }}
+      with_items:
+        - etc/ckan/who.ini
+        - etc/ckan/apache.wsgi
+        - etc/ckan/datapusher.wsgi
+        - etc/ckan/production.ini
+        - etc/ckan/datapusher.ini
+        - etc/supervisord.conf
+        - etc/httpd/conf.d/ckan.conf
+        - etc/httpd/conf.d/datapusher.conf
+        - etc/httpd/conf.d/ngds-repo.conf
+        - etc/cron.d/ckan-harvest
+        - etc/cron.daily/remove_old_sessions
+        - etc/init/supervisor.conf
+        - var/tmp/datastore_permissions.sql
+        - var/tmp/ngds.solr.tgz
+        - var/tmp/solr.web.xml
+        - var/tmp/schema.xml
+
+    - name: copy executables
+      action: copy src={{ item }} dest=/{{ item }} mode=744
+      with_items:
+        - usr/bin/ckan
+        - tmp/before_rpm.sh
+        - tmp/after_rpm.sh
+
+    - name: create superviserctl symlink
+      action: file src=/usr/lib/ckan/bin/supervisorctl dest=/usr/bin/supervisorctl state=link
+
+    - name: build rpm
+      action: command chdir=/var/www/html/ngds-repo/ fpm -t rpm -s dir --description='ngds.ckan' --before-install=/tmp/before_rpm.sh --after-install=/tmp/after_rpm.sh -n ngds.ckan --iteration {{ iteration }} -v {{ version }} -d memcached -d postgresql91-libs -d postgresql91-server -d postgresql91 -d postgis91 -d httpd -d mod_wsgi -d geos -d redis -d cronie -d python-psycopg2 -d tomcat6 -d java-openjdk -d wget -d unzip -d libxslt -d libxml2 -d xmlsec1 -d xmlsec1-openssl -d swig -d m2crypto -d gdal -d gdal-python -d gdal-devel -d policycoreutils-python --config-files /etc/ckan/who.ini --config-files /etc/ckan/production.ini --config-files /etc/ckan/datapusher.ini --config-files /etc/httpd/conf.d/ckan.conf --config-files /etc/httpd/conf.d/datapusher.conf /usr/bin/ckan /usr/lib/ckan/ /etc/ckan/ /var/tmp/ /etc/init/supervisor.conf /etc/supervisord.conf /usr/bin/supervisorctl /etc/httpd/conf.d/ckan.conf /etc/httpd/conf.d/datapusher.conf /etc/cron.d/ckan-harvest /etc/cron.daily/remove_old_sessions
+
+    - name: remove ckan.conf
+      action: file path=/etc/httpd/conf.d/ckan.conf state=absent
+
+    - name: remove datapusher.conf
+      action: file path=/etc/httpd/conf.d/datapusher.conf state=absent
+
+    - name: restart apache
+      action: service name=httpd state=restarted enabled=yes
+
+    - name: create repo
+      action: command createrepo /var/www/html/ngds-repo/
+
+    - name: stop supervisorctl rpm-build server
+      shell: /usr/bin/supervisorctl stop all
+      ignore_errors: yes
+
+    - name: check iptables for http
+      shell: iptables -L -n | grep --silent :80
+      register: check_allow_http
+      ignore_errors: yes
+      changed_when: no
+      always_run: yes
+
+    - name: add http to iptables
+      action: command /sbin/iptables -I INPUT 1 -p tcp --dport http -j ACCEPT
+      when: check_allow_http.rc != 0
+      notify:
+      - save iptables
+
+  handlers:
+    - name: save iptables
+      action: command service iptables save
