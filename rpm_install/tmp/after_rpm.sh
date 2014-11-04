@@ -51,7 +51,6 @@ if [ ! -f /usr/share/tomcat6/webapps/solr.war ]; then
   mkdir -p /var/solr
   cd /var/solr
   tar zxf /var/tmp/ngds.solr.tgz
-  # todo: execute this on a upgrade.
   cp -f /var/tmp/schema.xml /var/solr/ngds/conf/schema.xml
   chown -R tomcat:tomcat /var/solr/
 
@@ -114,6 +113,11 @@ if [ ! -f /usr/share/tomcat6/webapps/solr.war ]; then
   fi
 fi
 
+# update schema.xml if needed
+if [ $(diff /var/tmp/schema.xml /var/solr/ngds/conf/schema.xml | wc -l) -gt 0 ]; then
+  service tomcat6 stop
+  cp -f /var/tmp/schema.xml /var/solr/ngds/conf/schema.xml
+fi
 
 # prepare ckan DB
 if [ ! -f /var/lib/pgsql/9.1/data/PG_VERSION ]; then
