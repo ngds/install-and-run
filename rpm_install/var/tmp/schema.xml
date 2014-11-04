@@ -133,9 +133,20 @@
 
     <field name="_version_" type="string" indexed="true" stored="true"/>
 
+    <field name="bbox_area" type="float" indexed="true" stored="true" />
+    <field name="maxx" type="float" indexed="true" stored="true" />
+    <field name="maxy" type="float" indexed="true" stored="true" />
+    <field name="minx" type="float" indexed="true" stored="true" />
+    <field name="miny" type="float" indexed="true" stored="true" />
+
     <dynamicField name="*_date" type="date" indexed="true" stored="true" multiValued="false"/>
 
+    <field name="md_author_names" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="md_organization_names" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="md_content_models" type="string" indexed="true" stored="true" multiValued="true" />
+
     <dynamicField name="extras_*" type="text" indexed="true" stored="true" multiValued="false"/>
+    <dynamicField name="res_extras_*" type="text" indexed="true" stored="true" multiValued="true"/>
     <dynamicField name="vocab_*" type="string" indexed="true" stored="true" multiValued="true"/>
     <dynamicField name="*" type="string" indexed="true"  stored="false"/>
 </fields>
@@ -149,6 +160,7 @@
 <copyField source="download_url" dest="urls"/>
 <copyField source="res_url" dest="urls"/>
 <copyField source="extras_*" dest="text"/>
+<copyField source="res_extras_*" dest="text"/>
 <copyField source="vocab_*" dest="text"/>
 <copyField source="urls" dest="text"/>
 <copyField source="name" dest="text"/>
@@ -161,5 +173,9 @@
 <copyField source="res_description" dest="text"/>
 <copyField source="maintainer" dest="text"/>
 <copyField source="author" dest="text"/>
+
+<copyField source="md_author_names" dest="text" />
+<copyField source="md_organization_names" dest="text" />
+<copyField source="md_content_models" dest="text" />
 
 </schema>
