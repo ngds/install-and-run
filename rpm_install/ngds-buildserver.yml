@@ -93,7 +93,7 @@
       action: command chdir=/usr/lib/ckan/src/ckanext-pages/ ../../bin/python setup.py develop
 
     - name: get ngds extension
-      action: git repo=https://github.com/FuhuXia/ckanext-ngds dest=/usr/lib/ckan/src/ckanext-ngds version=for-rpm
+      action: git repo=https://github.com/ngds/ckanext-ngds dest=/usr/lib/ckan/src/ckanext-ngds
 
     - name: install requirements for ngds
       action: pip requirements=/usr/lib/ckan/src/ckanext-ngds/requirements.txt virtualenv=/usr/lib/ckan/
@@ -102,7 +102,7 @@
       action: command chdir=/usr/lib/ckan/src/ckanext-ngds/ ../../bin/python setup.py develop
 
     - name: get mapsearch extension
-      action: git repo=https://github.com/FuhuXia/ckanext-mapsearch dest=/usr/lib/ckan/src/ckanext-mapsearch version=for-rpm
+      action: git repo=https://github.com/ngds/ckanext-mapsearch dest=/usr/lib/ckan/src/ckanext-mapsearch
 
     - name: install requirements for mapsearch
       action: pip requirements=/usr/lib/ckan/src/ckanext-mapsearch/requirements.txt virtualenv=/usr/lib/ckan/
@@ -129,7 +129,7 @@
       action: command chdir=/usr/lib/ckan/src/ckanext-datastorecsw/ ../../bin/python setup.py develop
 
     - name: get metadata extension
-      action: git repo=https://github.com/FuhuXia/ckanext-metadata dest=/usr/lib/ckan/src/ckanext-metadata version=for-rpm
+      action: git repo=https://github.com/ngds/ckanext-metadata dest=/usr/lib/ckan/src/ckanext-metadata
 
     - name: install requirements for metadata
       action: pip requirements=/usr/lib/ckan/src/ckanext-metadata/requirements.txt virtualenv=/usr/lib/ckan/
@@ -138,7 +138,7 @@
       action: command chdir=/usr/lib/ckan/src/ckanext-metadata/ ../../bin/python setup.py develop
 
     - name: get geoserver extension
-      action: git repo=https://github.com/FuhuXia/ckanext-geoserver dest=/usr/lib/ckan/src/ckanext-geoserver version=for-rpm
+      action: git repo=https://github.com/ngds/ckanext-geoserver dest=/usr/lib/ckan/src/ckanext-geoserver
 
     - name: install requirements for geoserver
       action: pip requirements=/usr/lib/ckan/src/ckanext-geoserver/requirements.txt virtualenv=/usr/lib/ckan/
