@@ -37,10 +37,10 @@ if [ ! -f /usr/share/tomcat6/webapps/geoserver.war ]; then
   if [ ! -f /tmp/geoserver-2.5.3-war.zip ]; then
     echo "Error: coud not fetch geoserver package."
     echo "geoserver needs to be install manually."
-    return
+  else
+    unzip -o geoserver-2.5.3-war.zip
+    cp geoserver.war /usr/share/tomcat6/webapps/
   fi
-  unzip -o geoserver-2.5.3-war.zip
-  cp geoserver.war /usr/share/tomcat6/webapps/
 fi
 
 
@@ -62,59 +62,60 @@ if [ ! -f /usr/share/tomcat6/webapps/solr.war ]; then
   if [ ! -f /tmp/solr-4.2.1.tgz ]; then
     echo "Error: coud not download solr package."
     echo "Solr needs to be install manually."
-    return
-  fi
-  tar zxf solr-4.2.1.tgz
-  cp solr-4.2.1/dist/solr-4.2.1.war /usr/share/tomcat6/webapps/solr.war
-
-  # wait 2+ min for war file to be deployed
-  echo "Deploying solr 4.2.1 ..."
-  n=0
-  ret=0
-  until [ $n -ge 30 ]
-  do
-    sleep 5
-    if [ -f /usr/share/tomcat6/webapps/solr/WEB-INF/web.xml ]; then
-      ret=1
-      break
-    fi
-    n=$[$n+1]
-  done
-
-  if [ $ret -eq 0 ]; then
-    echo "ERROR: solr deployment failed. It needs to be fixed manually."
-    return
-  fi
-
-  chown tomcat:tomcat /var/tmp/solr.web.xml
-  cp -f /var/tmp/solr.web.xml /usr/share/tomcat6/webapps/solr/WEB-INF/web.xml
-  service tomcat6 restart
-
-  echo "Preparing solr core for ngds..."
-  solr_url="http://127.0.0.1:8080/solr/"
-
-  # wait 2+ min for war file to be deployed
-  n=0
-  until [ $n -ge 30 ]; do
-    sleep 5
-    reponse_code=$(curl --write-out "%{http_code}\n" --silent --output /dev/null "$solr_url")
-    if [ "$reponse_code" = "200" ]; then
-      core_url="{$solr_url}admin/cores?wt=json&indexInfo=false&action=CREATE&name=ngds&instanceDir=ngds&dataDir=data&config=solrconfig.xml&schema=schema.xml"
-      reponse_code=$(curl --write-out "%{http_code}\n" --silent --output /dev/null "$core_url")
-      break
-    fi
-    n=$[$n+1]
-  done
-
-  if [ "$reponse_code" = "200" ]; then
-    echo "Solr core done."
+    # exit out of solr
   else
-    echo "ERROR: solr core creation failed. It need to be fixed manually."
+    tar zxf solr-4.2.1.tgz
+    cp solr-4.2.1/dist/solr-4.2.1.war /usr/share/tomcat6/webapps/solr.war
+
+    # wait 2+ min for war file to be deployed
+    echo "Deploying solr 4.2.1 ..."
+    n=0
+    ret=0
+    until [ $n -ge 30 ]
+    do
+      sleep 5
+      if [ -f /usr/share/tomcat6/webapps/solr/WEB-INF/web.xml ]; then
+        ret=1
+        break
+      fi
+      n=$[$n+1]
+    done
+
+    if [ $ret -eq 0 ]; then
+      echo "ERROR: solr deployment failed. It needs to be fixed manually."
+      # exit out of solr
+    else
+      chown tomcat:tomcat /var/tmp/solr.web.xml
+      cp -f /var/tmp/solr.web.xml /usr/share/tomcat6/webapps/solr/WEB-INF/web.xml
+      service tomcat6 restart
+
+      echo "Preparing solr core for ngds..."
+      solr_url="http://127.0.0.1:8080/solr/"
+
+      # wait 2+ min for war file to be deployed
+      n=0
+      until [ $n -ge 30 ]; do
+        sleep 5
+        reponse_code=$(curl --write-out "%{http_code}\n" --silent --output /dev/null "$solr_url")
+        if [ "$reponse_code" = "200" ]; then
+          core_url="{$solr_url}admin/cores?wt=json&indexInfo=false&action=CREATE&name=ngds&instanceDir=ngds&dataDir=data&config=solrconfig.xml&schema=schema.xml"
+          reponse_code=$(curl --write-out "%{http_code}\n" --silent --output /dev/null "$core_url")
+          break
+        fi
+        n=$[$n+1]
+      done
+
+      if [ "$reponse_code" = "200" ]; then
+        echo "Solr core done."
+      else
+        echo "ERROR: solr core creation failed. It need to be fixed manually."
+      fi
+    fi
   fi
 fi
 
 
-# parepare ckan DB
+# prepare ckan DB
 if [ ! -f /var/lib/pgsql/9.1/data/PG_VERSION ]; then
   service postgresql-9.1 initdb
   service postgresql-9.1 start
