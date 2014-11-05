@@ -224,6 +224,9 @@
       shell: /usr/bin/supervisorctl stop all
       ignore_errors: yes
 
+    - name: stop supervisorctl from starting on boot
+      action: file path=/etc/init/supervisor.conf state=absent
+
     - name: check iptables for http
       shell: iptables -L -n | grep --silent :80
       register: check_allow_http
