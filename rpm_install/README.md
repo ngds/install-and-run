@@ -1,6 +1,13 @@
 ## [ For end-user to deploy NGDS ckan application via rpm ]
 
-To install the NGDS ckan on a CentOS box, start with a CentOS 6.4 x86_64 minimal download. Keep everything as original as you can, then run the following commands:
+### Prerequisites:
+1. CentOS 6.4 x86_64 minimal install. 50 GB disk space and 4GM RAM are recommended. Keep everything as original as you can. Other version of CentOS has not been tested.
+2. Internet access is ready. You should be able to `ping www.yahoo.com` from your CentOS box.
+3. root ssh login is enabled. You should be able to ssh into your CentOS box from your workstation and execute installation commands. 
+
+### Installation:
+
+To install the NGDS ckan on a CentOS box, run the following commands. For now, use yum.tigbox.com for NGDS-RPM-SERVER::
 
     yum update -y ca-certificates
 
