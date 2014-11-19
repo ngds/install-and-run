@@ -1,117 +1,62 @@
-install-and-run
-===============
+## [ For end-user to deploy NGDS ckan application via rpm ]
 
-Use this repository's issue tracker to post comments, bug reports, and help questions on installing and running NGDS CKAN. Find the formal installation documentation NGDS_Installation_Documentation.docx provided in this repository, which has essential background information and other useful tips for installing a publisher or aggregator node for use in the NGDS system. Below is a quick installation guide (from the same installer script) meant for seasoned Linux users.
+### Prerequisites:
+1. CentOS 6.4 x86_64 minimal install. 50 GB disk space and 4GM RAM are recommended. Keep everything as original as you can. Other version of CentOS has not been tested.
+2. Internet access is ready. You should be able to `ping www.yahoo.com` from your CentOS box.
+3. root ssh login is enabled. You should be able to ssh into your CentOS box from your workstation and execute installation commands. 
 
-### Low Level Installer Script Documentation
+### Installation:
 
-### Introduction
+To install the NGDS ckan on a CentOS box, run the following commands. For now, use yum.tigbox.com for NGDS-RPM-SERVER::
 
+    yum update -y ca-certificates
 
-[Here's the installer script you'll be running](https://github.com/ngds/install-and-run/blob/master/installation/install-ngds.sh)
+    cd /etc/yum.repos.d/
+    curl -fsLOS http://NGDS-RPM-SERVER/libxml2.repo
+    curl -fsLOS http://NGDS-RPM-SERVER/ngds.repo
 
-[ckanext-ngds](https://github.com/ngds/ckanext-ngds) is in a beta production mode; we're shooting for releasing v1.0 in April 2014.  The installer script will install the latest stable version of ckanext-ngds along with core CKAN and every other software dependency it needs to run in production.  Currently, the stable version of ckanext-ngds is developed to run with core CKAN v2.0.4.  We have development branches in the ckanext-ngds Github repository which we use to keep this software up-to-date with the latest stable releases of core CKAN and these branches follow this naming convention:
-`upgrade-ckanvX.X.X` where `X.X.X` refers to a core CKAN release version.  These development branches do not contain stable code and will usually be merged into the master branch once they are stable.
+    rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+    rpm -Uvh http://yum.postgresql.org/9.1/redhat/rhel-6.3-x86_64/pgdg-centos91-9.1-4.noarch.rpm
+    rpm -Uvh http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/pgdg-centos93-9.3-1.noarch.rpm
 
-### Installation
+    yum install -y libxml2-2.9.0 gdal-1.9.2 gdal-python-1.9.2 gdal-devel-1.9.2 yum-utils
+    yum-config-manager --disable pgdg93
+    yum install ngds.ckan
 
-Installation with the installer script has only been tested in Ubuntu v12.04 LTS, Xubuntu v12.04, Ubuntu v12.10 and Xubuntu v12.10.  All of this software has been tested on MacOSX as well, but we don't have an installation script for that -- so you'll have to install all of the components manually.  
+After all steps completed, you should be able to access the NGDS ckan application via http://CENTOS-IP-ADDRESS/.
 
-Setup your environment (assumes starting as user `root`. If you created your system with `ngds` as your main user, you may skip the first 3 steps below.):
+### Optional post installation:
 
-    $ adduser ngds
-    $ adduser ngds sudo
-    $ su -l ngds
+To add a sysadmin user, register an account on the web gui, then run the following commands to promote it to sysadmin.
 
-Download NGDS:
+    ckan sysadmin add <username>
 
-    $ cd ~
-    $ mkdir tmp
-    $ cd tmp
-    $ git clone https://github.com/ngds/install-and-run.git
-    $ cd install-and-run/installation
+To enable harvester, uncomment the cron job at `/etc/cron.d/ckan-harvest`
 
-Set custom parameters in the installer script:
+### Updating existing NGDS application:
 
-    site_url
-    SERVER_NAME
-    SMTP_SERVER
-    SMTP_STARTTLS
-    SMTP_USER
-    SMTP_PASSWORD
-    SMTP_MAIL_FROM
-    GEOSERVER_REST_URL
+When NGDS releases new rpm, you can upgrade exisitng NGDS ckan application with the following command:
 
-    # Customize CSW
-    IDENTIFICATION_TITLE
-    IDENTIFICATION_ABSTRACT
-    IDENTIFICATION_KEYWORDS
-    IDENTIFICATION_KEYWORDS_TYPE
-    IDENTIFICATION_FEES
-    IDENTIFICATION_ACCESSCONSTRAINTS
-    PROVIDER_NAME
-    PROVIDER_URL
-    CONTACT_NAME
-    CONTACT_POSITION
-    CONTACT_ADDRESS
-    CONTACT_CITY
-    CONTACT_STATEORPROVINCE
-    CONTACT_POSTALCODE
-    CONTACT_COUNTRY
-    CONTACT_PHONE
-    CONTACT_FAX
-    CONTACT_EMAIL
-    CONTACT_URL
-    CONTACT_HOURS
-    CONTACT_INSTRUCTIONS
-    CONTACT_ROLE
+    yum install ngds.ckan
 
-Run the installer script:
+## [ For developer to build rpm via ansible script ]
 
-    $ sudo ./install-ngds.sh (this will take a long time)
+For NGDS developers, when new code changes are ready on github repository, you can integrate the changes from git into rpm package and release a new rpm version to end users. The rpm building process can be done directly on officical NGDS-RPM-SERVER server, or done on a local CentOS 6.4 x86_64 box as rpm build server, then transfer the rpm files to NGDS-RPM-SERVER. To prepare the CentOS box ready for the rpm building, here are the steps:
 
-Troubleshooting:
+    yum update -y ca-certificates
 
-If `install_ngds.sh` is not recognized as an executable file, allow the current user to run it as an executable:
+    cd /etc/yum.repos.d/
+    curl -fsLOS http://NGDS-RPM-SERVER/libxml2.repo
 
-    $ sudo chmod u+x install_ngds.sh
+    rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+    rpm -Uvh http://yum.postgresql.org/9.1/redhat/rhel-6.3-x86_64/pgdg-centos91-9.1-4.noarch.rpm
+    rpm -Uvh http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/pgdg-centos93-9.3-1.noarch.rpm
 
-NGDS should be being served at http://127.0.0.1/
-Login: {username: admin, password: admin}
+    yum install -y libxml2-2.9.0 libxml2-devel-2.9.0 libxml2-python-2.9.0 gdal-1.9.2 gdal-python-1.9.2 gdal-devel-1.9.2 yum-utils
+    yum-config-manager --disable pgdg93
 
-If you find that upon visiting http://127.0.0.1/ (or http://<SERVER_NAME>) instead of NGDS you get the generic Apache "It's working page", run this command: `sudo a2dissite default`.
+To build rpm, you need to install ansible client on your workstation, add a ansible hosts file pointing to the ip address of the CentOS rpm build server, then run the ansible script:
 
-Go to http://127.0.0.1/organization and add a new organization named 'public'.
+    ansible-playbook -i hosts ngds-buildserver.yml
 
-Error Log Locations:
-
-    The log file for CKAN is in: /var/log/apache2/
-
-    Source code is installed in: /opt/ngds/bin/default
-
-    CKAN error log: /var/log/apache2/ckan_default.error.log
-    
-    CKAN custom log: /var/log/apache2/ckan_default.custom.log
-    
-    Harvest gather queue log: /var/log/ckan-central-gather.log
-    
-    Harvest fetch queue log: /var/log/ckan-central-fetch.log
-    
-    Harvest run log: /var/log/ckan-central-run-harvest.log
-    
-    Celery log: /var/log/ckan-node-celery.log
-
-    Geoserver and SOLR run on top of Tomcat:
-    Tomcat log: /var/log/ckan-tomcat.log
-
-### Changelog
-##### v1.0.1 - 2014/04/21
-- Fixed map search bug where the user could only perform one search query.
-- Make CSV error failure more graceful.
-- Added custom NGDS favicon.
-- Added search hints link.
-- Changed some of the contributor organization info.
-- No previews for unsupported data.
-- Fixed ratings issue.
-- Custom NGDS activity streams.
-- Add option for contact email in installation script.
+When done, the new rpm package will at http://CENTOS-RPM-SERVER/ngds-repo/.
