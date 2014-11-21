@@ -37,12 +37,12 @@
 1. To give this account administrative rights you will need to ssh into the server. If you're on Windows you can follow the directions below to set up the PuTTY SSH client.
 1. Download putty.exe from [here](http://www.putty.org/). Also download puttygen.exe.
 1. The ngds.pem key pair that was downloaded previously needs to be converted to a Putty key. To do this:
-	- Run **puttygen.exe**.
-	- Click **Load**.
-	- In the dropdown menu on the bottom right select **All Files (\*.\*)**, select the **ngds.pem** key, and press **Open**.
-	- Click the button **Save private key** and yes in the popup menu.
-	- Name your key **ngds.ppk** and Save.
-	- Close the PuTTY Key Generator.
+	1. Run **puttygen.exe**.
+	1. Click **Load**.
+	1. In the dropdown menu on the bottom right select **All Files (\*.\*)**, select the **ngds.pem** key, and press **Open**.
+	1. Click the button **Save private key** and yes in the popup menu.
+	1. Name your key **ngds.ppk** and Save.
+	1. Close the PuTTY Key Generator.
 1. Run **putty.exe**.
 1. For **Host Name (or IP address)** enter the the Public IP of your Amazon instance.
 1. In the window on the left, under **Connection - SSH - Auth** and **Private key file for authentication** add the ngds.ppk key you created.
