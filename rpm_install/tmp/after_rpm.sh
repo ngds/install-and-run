@@ -144,6 +144,9 @@ if [ ! -f /var/lib/pgsql/9.1/data/PG_VERSION ]; then
 
   ckan db init
   ckan --plugin=ckanext-spatial spatial initdb
+
+  ckan user add admin password=admin email=admin@domain.local
+  ckan sysadmin add admin
 fi
 
 
