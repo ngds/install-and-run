@@ -27,28 +27,14 @@
 1. There should now be 2 security rules. The default SSH with port 22 open and HTTP with port 80 open. Click the **Review and Launch** button.
 1. In the pop-up message select **Continue with Magnetic as the boot volume for this instance**.
 1. Ignore the warnings about the instance's security and being ineligible for the free usage tier. Click the **Launch** button.
-1. Create a new key pair and name it **ngds**. **Download** the key pair. Do not lose this downloaded file, called **ngds.pem**.
+1. Create a new key pair and name it **ngds**. **Download** the key pair. Do not lose this downloaded file, called **ngds.pem**. This is needed if you ever want to ssh into your instance.
 1. Click the **Launch Instances** button.
 1. On the Launch Status page click the **View Instances** button to see a list of your instances.
-1. Note the IP address in the **Public IP** column for this new instance. Once the launch has completed you will be able to see your node at this IP address in any web browser.
-1. At the NGDS landing page click **Register** to create an account.
-
-###Optional Post Deployment
-1. To give this account administrative rights you will need to ssh into the server. If you're on Windows you can follow the directions below to set up the PuTTY SSH client.
-1. Download putty.exe from [here](http://www.putty.org/). Also download puttygen.exe.
-1. The ngds.pem key pair that was downloaded previously needs to be converted to a Putty key. To do this:
-	1. Run **puttygen.exe**.
-	1. Click **Load**.
-	1. In the dropdown menu on the bottom right select **All Files (\*.\*)**, select the **ngds.pem** key, and press **Open**.
-	1. Click the button **Save private key** and yes in the popup menu.
-	1. Name your key **ngds.ppk** and Save.
-	1. Close the PuTTY Key Generator.
-1. Run **putty.exe**.
-1. For **Host Name (or IP address)** enter the the Public IP of your Amazon instance.
-1. In the window on the left, under **Connection - SSH - Auth** and **Private key file for authentication** add the ngds.ppk key you created.
-1. Click **Open** and click yes for the PuTTY Security Alert.
-1. Login as **root** then type `ckan sysadmin add <username>` where `<username>` is the username selected when you registered the new account on the NGDS landing page.
-1. This user is now a system admin and on the NGDS landing page after refreshing the web browser there will be a new button for Sysadmin settings whenever this user is logged in.
+1. Note the IP address in the **Public IP** column for this new instance. Once the launch has completed (it will take several minutes) you will be able to see your node at this IP address in any web browser.
+1. **Important!** Make sure these steps are completed immediately after launch.
+  - At the NGDS landing page click **Sign In**.
+  - Login with the default sysadmin account. The user is `admin` and the password is `admin`.
+  - In the user settings change the password to something more secure.
 
 ## Deployment on Your Own Server
 
