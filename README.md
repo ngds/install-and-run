@@ -54,9 +54,10 @@
 
 ### Prerequisites:
 1. CentOS 6.4 x86_64 minimal install. Available [here](http://mirrors.usc.edu/pub/linux/distributions/centos/6.4/isos/x86_64/CentOS-6.4-x86_64-minimal.iso). 50 GB disk space and 4GM RAM are recommended. Keep everything as original as you can. Other versions of CentOS have not been tested. 
-  - **Important!** During the installation process, on the page where you give your computer a Hostname, be sure to click the **Configure Network** button in the bottom left corner. Edit the **System eth0** connection and be sure to check **Connect automatically**. Click Apply then close the Network Connections box.
+  - **Important!** During the installation process, on the page where you give your computer a Hostname, be sure to click the **Configure Network** button in the bottom left corner. Edit the **System eth0** connection and be sure to check **Connect automatically**. Click Apply then close the Network Connections box. This will give you Internet access and allow you to ssh in.
 2. Internet access is ready. You should be able to `ping www.yahoo.com` from your CentOS box.
-3. root ssh login is enabled. You should be able to ssh into your CentOS box from your workstation and execute installation commands. 
+3. Root ssh login is enabled. You should be able to ssh into your CentOS box from your workstation and execute installation commands.
+4. Know the IP address of your CentOS box. Issue the command `ip addr`.
 
 ### Installation:
 
@@ -78,13 +79,7 @@ To install the NGDS ckan on a CentOS box, run the following commands. For now, u
 
 After all steps completed, you should be able to access the NGDS ckan application via http://CENTOS-IP-ADDRESS/.
 
-### Optional post installation:
-
-To add a sysadmin user, register an account on the web gui, then run the following commands to promote it to sysadmin.
-
-    ckan sysadmin add <username>
-
-To enable harvester, uncomment the cron job at `/etc/cron.d/ckan-harvest`
+**Important!** The default sysadmin password must be changed immediately. Upon the completion of setup login to the web interface with the default user `admin`. The password is `admin`. In the user settings change the password to something more secure.
 
 ### Updating existing NGDS application:
 
