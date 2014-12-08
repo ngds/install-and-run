@@ -65,6 +65,8 @@ To install the NGDS ckan on a CentOS box, run the following commands. For now, u
 
 After all steps completed, you should be able to access the NGDS ckan application via http://CENTOS-IP-ADDRESS/.
 
+After all the steps please update /etc/ckan/production.ini file. Update "ckan.site_url" variable with correct URL.
+
 **Important!** The default sysadmin password must be changed immediately. Upon the completion of setup login to the web interface with the default user `admin`. The password is `admin`. In the user settings change the password to something more secure.
 
 ### Updating existing NGDS application:
