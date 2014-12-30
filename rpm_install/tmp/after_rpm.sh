@@ -136,10 +136,17 @@ if [ ! -f /var/lib/pgsql/9.1/data/PG_VERSION ]; then
   sudo -u postgres createdb -O ckan_default ckan_default -E utf-8
   sudo -u postgres createdb -O ckan_default datastore_default  -E utf-8
   sudo -u postgres psql datastore_default -f /var/tmp/datastore_permissions.sql
+
+  # install postgis on both ckan_default and datastore_default
   sudo -u postgres psql -d ckan_default -f /usr/pgsql-9.1/share/contrib/postgis-1.5/postgis.sql > /dev/null
   sudo -u postgres psql -d ckan_default -f /usr/pgsql-9.1/share/contrib/postgis-1.5/spatial_ref_sys.sql > /dev/null
   sudo -u postgres psql -d ckan_default -c 'GRANT SELECT, UPDATE, INSERT, DELETE ON spatial_ref_sys TO ckan_default' > /dev/null
   sudo -u postgres psql -d ckan_default -c 'GRANT SELECT, UPDATE, INSERT, DELETE ON geometry_columns TO ckan_default' > /dev/null
+  sudo -u postgres psql -d datastore_default -f /usr/pgsql-9.1/share/contrib/postgis-1.5/postgis.sql > /dev/null
+  sudo -u postgres psql -d datastore_default -f /usr/pgsql-9.1/share/contrib/postgis-1.5/spatial_ref_sys.sql > /dev/null
+  sudo -u postgres psql -d datastore_default -c 'GRANT SELECT, UPDATE, INSERT, DELETE ON spatial_ref_sys TO ckan_default' > /dev/null
+  sudo -u postgres psql -d datastore_default -c 'GRANT SELECT, UPDATE, INSERT, DELETE ON geometry_columns TO ckan_default' > /dev/null
+
   sudo -u postgres psql postgres postgres -c "select pg_reload_conf();" > /dev/null
 
   ckan db init
