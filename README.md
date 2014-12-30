@@ -4,6 +4,7 @@
   1. Amazon EC2 Virtual Server *(easiest method)*
   2. Set Up Your Own Server
 2. NGDS for Development
+3. Post Deployment
 
 ## Deployment on an Amazon EC2 Virtual Server
 
@@ -69,12 +70,6 @@ After all the steps please update /etc/ckan/production.ini file. Update "ckan.si
 
 **Important!** The default sysadmin password must be changed immediately. Upon the completion of setup login to the web interface with the default user `admin`. The password is `admin`. In the user settings change the password to something more secure.
 
-### Updating existing NGDS application:
-
-When NGDS releases new rpm, you can upgrade exisitng NGDS ckan application with the following command:
-
-    yum install ngds.ckan
-
 ## [ For developer to build rpm via ansible script ]
 
 For NGDS developers, when new code changes are ready on github repository, you can integrate the changes from git into rpm package and release a new rpm version to end users. The rpm building process can be done directly on officical NGDS-RPM-SERVER server, or done on a local CentOS 6.4 x86_64 box as rpm build server, then transfer the rpm files to NGDS-RPM-SERVER. To prepare the CentOS box ready for the rpm building, here are the steps:
@@ -96,3 +91,39 @@ To build rpm, you need to install ansible client on your workstation, add a ansi
     ansible-playbook -i hosts ngds-buildserver.yml
 
 When done, the new rpm package will at http://CENTOS-RPM-SERVER/ngds-repo/.
+
+## Post Deployment
+
+### Access server via SSH
+
+If you're on Windows you can follow the directions below to set up the PuTTY SSH client.
+
+1. Download putty.exe from here. Also download puttygen.exe.
+1. The ngds.pem key pair that was downloaded previously needs to be converted to a Putty key. To do this:
+1. Run puttygen.exe.
+1. Click Load.
+1. In the dropdown menu on the bottom right select All Files (*.*), select the ngds.pem key, and press Open.
+1. Click the button Save private key and yes in the popup menu.
+1. Name your key ngds.ppk and Save.
+1. Close the PuTTY Key Generator.
+1. Run putty.exe.
+1. For Host Name (or IP address) enter the the Public IP of your Amazon instance.
+1. In the window on the left, under Connection - SSH - Auth and Private key file for authentication add the ngds.ppk key you created.
+1. Click Open and click yes for the PuTTY Security Alert.
+1. Login as root 
+
+### Updating NGDS
+
+When NGDS releases new rpm, you can upgrade exisitng NGDS ckan application with the following command:
+
+    yum install ngds.ckan
+
+### Sysadmin
+
+  A sysadmin will be created automatically but the manual way to do it would have been:
+
+    ckan sysadmin add <username>
+    
+### Restarting Apache
+
+    /etc/init.d/httpd restart
