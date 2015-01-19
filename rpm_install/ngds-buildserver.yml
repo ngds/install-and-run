@@ -78,7 +78,7 @@
       action: command chdir=/usr/lib/ckan/src/ckanext-harvest/ ../../bin/python setup.py develop
 
     - name: get spatial extension
-      action: git repo=https://github.com/ckan/ckanext-spatial dest=/usr/lib/ckan/src/ckanext-spatial version=stable
+      action: git repo=https://github.com/REI-Systems/ckanext-spatial dest=/usr/lib/ckan/src/ckanext-spatial version=stable-shapely
 
     - name: install requirements for spatial
       action: pip requirements=/usr/lib/ckan/src/ckanext-spatial/pip-requirements.txt virtualenv=/usr/lib/ckan/
