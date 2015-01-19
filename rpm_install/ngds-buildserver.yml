@@ -205,8 +205,32 @@
     - name: create superviserctl symlink
       action: file src=/usr/lib/ckan/bin/supervisorctl dest=/usr/bin/supervisorctl state=link
 
+#pycsw setup
+    - name: get pycsw version
+      action: git repo=https://github.com/geopython/pycsw.git dest=/usr/lib/ckan/src/pycsw version=1.8.0
+
+    - name: run setup build for pycsw
+      action: command chdir=/usr/lib/ckan/src/pycsw/ ../../bin/python setup.py build
+
+    - name: run setup install for pycsw
+      action: command chdir=/usr/lib/ckan/src/pycsw/ ../../bin/python setup.py install
+
+    - name: install pyproj
+      action: pip name=pyproj virtualenv=/usr/lib/ckan/
+
+    - name: install geolinks
+      action: pip name=geolinks virtualenv=/usr/lib/ckan/
+
+    - name: copy pycsw configuration files
+      action: copy src={{item}} dest=/{{item}} mode=644
+      with_items:
+        - etc/ckan/pycsw.cfg
+        - etc/ckan/csw.wsgi
+        - etc/cron.d/ckan-pycsw
+#//pycsw setup
+
     - name: build rpm
-      action: command chdir=/var/www/html/ngds-repo/ fpm -t rpm -s dir --description='ngds.ckan' --before-install=/tmp/before_rpm.sh --after-install=/tmp/after_rpm.sh -n ngds.ckan --iteration {{ iteration }} -v {{ version }} -d memcached -d postgresql91-libs -d postgresql91-server -d postgresql91 -d postgis91 -d httpd -d mod_wsgi -d geos -d redis -d cronie -d python-psycopg2 -d tomcat6 -d java-openjdk -d wget -d unzip -d libxslt -d libxml2 -d xmlsec1 -d xmlsec1-openssl -d swig -d m2crypto -d gdal -d gdal-python -d gdal-devel -d policycoreutils-python --config-files /etc/ckan/who.ini --config-files /etc/ckan/production.ini --config-files /etc/ckan/datapusher.ini --config-files /etc/httpd/conf.d/ckan.conf --config-files /etc/httpd/conf.d/datapusher.conf /usr/bin/ckan /usr/lib/ckan/ /usr/lib/datapusher/ /etc/ckan/ /var/tmp/ /etc/init/supervisor.conf /etc/supervisord.conf /usr/bin/supervisorctl /etc/httpd/conf.d/ckan.conf /etc/httpd/conf.d/datapusher.conf /etc/cron.d/ckan-harvest /etc/cron.daily/remove_old_sessions
+      action: command chdir=/var/www/html/ngds-repo/ fpm -t rpm -s dir --description='ngds.ckan' --before-install=/tmp/before_rpm.sh --after-install=/tmp/after_rpm.sh -n ngds.ckan --iteration {{ iteration }} -v {{ version }} -d memcached -d postgresql91-libs -d postgresql91-server -d postgresql91 -d postgis91 -d httpd -d mod_wsgi -d geos -d redis -d cronie -d python-psycopg2 -d tomcat6 -d java-openjdk -d wget -d unzip -d libxslt -d libxml2 -d xmlsec1 -d xmlsec1-openssl -d swig -d m2crypto -d gdal -d gdal-python -d gdal-devel -d policycoreutils-python --config-files /etc/ckan/who.ini --config-files /etc/ckan/production.ini --config-files /etc/ckan/datapusher.ini --config-files /etc/httpd/conf.d/ckan.conf --config-files /etc/httpd/conf.d/datapusher.conf --config-files /etc/ckan/pycsw.cfg /usr/bin/ckan /usr/lib/ckan/ /usr/lib/datapusher/ /etc/ckan/ /var/tmp/ /etc/init/supervisor.conf /etc/supervisord.conf /usr/bin/supervisorctl /etc/httpd/conf.d/ckan.conf /etc/httpd/conf.d/datapusher.conf /etc/cron.d/ckan-harvest /etc/cron.d/ckan-pycsw /etc/cron.daily/remove_old_sessions
 
     - name: remove ckan.conf
       action: file path=/etc/httpd/conf.d/ckan.conf state=absent
