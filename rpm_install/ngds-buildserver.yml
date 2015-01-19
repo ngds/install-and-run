@@ -93,7 +93,7 @@
       action: command chdir=/usr/lib/ckan/src/ckanext-pages/ ../../bin/python setup.py develop
 
     - name: get ngds extension
-      action: git repo=https://github.com/ngds/ckanext-ngds dest=/usr/lib/ckan/src/ckanext-ngds
+      action: git repo=https://github.com/REI-Systems/ckanext-ngds dest=/usr/lib/ckan/src/ckanext-ngds version=build
 
     - name: install requirements for ngds
       action: pip requirements=/usr/lib/ckan/src/ckanext-ngds/requirements.txt virtualenv=/usr/lib/ckan/
@@ -102,7 +102,7 @@
       action: command chdir=/usr/lib/ckan/src/ckanext-ngds/ ../../bin/python setup.py develop
 
     - name: get mapsearch extension
-      action: git repo=https://github.com/ngds/ckanext-mapsearch dest=/usr/lib/ckan/src/ckanext-mapsearch
+      action: git repo=https://github.com/REI-Systems/ckanext-mapsearch dest=/usr/lib/ckan/src/ckanext-mapsearch version=build
 
     - name: install requirements for mapsearch
       action: pip requirements=/usr/lib/ckan/src/ckanext-mapsearch/requirements.txt virtualenv=/usr/lib/ckan/
@@ -111,7 +111,7 @@
       action: command chdir=/usr/lib/ckan/src/ckanext-mapsearch/ ../../bin/python setup.py develop
 
     - name: get ogcpreview extension
-      action: git repo=https://github.com/ngds/ckanext-ogcpreview dest=/usr/lib/ckan/src/ckanext-ogcpreview
+      action: git repo=https://github.com/REI-Systems/ckanext-ogcpreview dest=/usr/lib/ckan/src/ckanext-ogcpreview version=build
 
     - name: install requirements for ogcpreview
       action: pip requirements=/usr/lib/ckan/src/ckanext-ogcpreview/requirements.txt virtualenv=/usr/lib/ckan/
@@ -129,7 +129,7 @@
       action: command chdir=/usr/lib/ckan/src/ckanext-datastorecsw/ ../../bin/python setup.py develop
 
     - name: get metadata extension
-      action: git repo=https://github.com/ngds/ckanext-metadata dest=/usr/lib/ckan/src/ckanext-metadata
+      action: git repo=https://github.com/REI-Systems/ckanext-metadata dest=/usr/lib/ckan/src/ckanext-metadata version=build
 
     - name: install requirements for metadata
       action: pip requirements=/usr/lib/ckan/src/ckanext-metadata/requirements.txt virtualenv=/usr/lib/ckan/
@@ -138,7 +138,7 @@
       action: command chdir=/usr/lib/ckan/src/ckanext-metadata/ ../../bin/python setup.py develop
 
     - name: get geoserver extension
-      action: git repo=https://github.com/ngds/ckanext-geoserver dest=/usr/lib/ckan/src/ckanext-geoserver
+      action: git repo=https://github.com/REI-Systems/ckanext-geoserver dest=/usr/lib/ckan/src/ckanext-geoserver version=build
 
     - name: install requirements for geoserver
       action: pip requirements=/usr/lib/ckan/src/ckanext-geoserver/requirements.txt virtualenv=/usr/lib/ckan/
