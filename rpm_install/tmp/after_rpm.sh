@@ -31,6 +31,7 @@ fi
 
 # install geoserver
 if [ ! -f /usr/share/tomcat6/webapps/geoserver.war ]; then
+  service tomcat6 start
   cd /tmp
   echo "Downloading geoserver 2.5.3 ..."
   curl -LfsOS http://downloads.sourceforge.net/project/geoserver/GeoServer/2.5.3/geoserver-2.5.3-war.zip
@@ -40,13 +41,35 @@ if [ ! -f /usr/share/tomcat6/webapps/geoserver.war ]; then
   else
     unzip -o geoserver-2.5.3-war.zip
     cp geoserver.war /usr/share/tomcat6/webapps/
+
+    # wait 2+ min for war file to be deployed
+    echo "Deploying geoserver 2.5.3 ..."
+    n=0
+    ret=0
+    until [ $n -ge 30 ]
+    do
+      sleep 5
+      if [ -f /var/lib/tomcat6/webapps/geoserver/data/global.xml ]; then
+        ret=1
+        break
+      fi
+      n=$[$n+1]
+    done
+
+    if [ $ret -eq 0 ]; then
+      echo "ERROR: geoserver deployment failed. It needs to be fixed manually."
+      # exit out of geoserver
+    else
+      service tomcat6 stop
+      chown tomcat:tomcat /var/tmp/geoserver.global.xml
+      cp -f /var/tmp/geoserver.global.xml /var/lib/tomcat6/webapps/geoserver/data/global.xml
+    fi
   fi
 fi
 
 
 # install solr
 if [ ! -f /usr/share/tomcat6/webapps/solr.war ]; then
-  service tomcat6 stop
   rm -rf /var/solr
   mkdir -p /var/solr
   cd /var/solr
