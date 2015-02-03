@@ -194,6 +194,7 @@
         - var/tmp/ngds.solr.tgz
         - var/tmp/solr.web.xml
         - var/tmp/schema.xml
+        - var/tmp/geoserver.global.xml
 
     - name: copy executables
       action: copy src={{ item }} dest=/{{ item }} mode=744
