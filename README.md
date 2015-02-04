@@ -40,7 +40,7 @@
 ## Deployment on Your Own Server
 
 ### Prerequisites:
-1. CentOS 6.4 x86_64 minimal install. Available [here](http://mirrors.usc.edu/pub/linux/distributions/centos/6.4/isos/x86_64/CentOS-6.4-x86_64-minimal.iso). 50 GB disk space and 4GM RAM are recommended. Keep everything as original as you can. Other versions of CentOS have not been tested. 
+1. CentOS 6.6 x86_64 minimal install. 50 GB disk space and 4GM RAM are recommended. Keep everything as original as you can. Other versions of CentOS have not been tested. 
   - **Important!** During the installation process, on the page where you give your computer a Hostname, be sure to click the **Configure Network** button in the bottom left corner. Edit the **System eth0** connection and be sure to check **Connect automatically**. Click Apply then close the Network Connections box. This will give you Internet access and allow you to ssh in.
 2. Internet access is ready. You should be able to `ping www.yahoo.com` from your CentOS box.
 3. Root ssh login is enabled. You should be able to ssh into your CentOS box from your workstation and execute installation commands.
@@ -48,7 +48,7 @@
 
 ### Installation:
 
-To install the NGDS ckan on a CentOS box, run the following commands. For now, use yum.tigbox.com for NGDS-RPM-SERVER::
+To install the NGDS ckan on a CentOS box, run the following commands. For now, use yum.tigbox.com for NGDS-RPM-SERVER:
 
     yum update -y ca-certificates
 
@@ -72,7 +72,7 @@ After all the steps please update two config files. Update "ckan.hostname" varia
 
 ## [ For developer to build rpm via ansible script ]
 
-For NGDS developers, when new code changes are ready on github repository, you can integrate the changes from git into rpm package and release a new rpm version to end users. The rpm building process can be done directly on officical NGDS-RPM-SERVER server, or done on a local CentOS 6.4 x86_64 box as rpm build server, then transfer the rpm files to NGDS-RPM-SERVER. To prepare the CentOS box ready for the rpm building, here are the steps:
+For NGDS developers, when new code changes are ready on github repository, you can integrate the changes from git into rpm package and release a new rpm version to end users. The rpm building process can be done directly on officical NGDS-RPM-SERVER server, or done on a local CentOS 6.6 x86_64 box as rpm build server, then transfer the rpm files to NGDS-RPM-SERVER. To prepare the CentOS box ready for the rpm building, here are the steps:
 
     yum update -y ca-certificates
 
