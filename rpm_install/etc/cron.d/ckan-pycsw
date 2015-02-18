@@ -1,2 +1,2 @@
 ## sync csw metadata records daily at 0100h
-0 1 * * * root /usr/lib/ckan/bin/paster --plugin=ckanext-spatial ckan-pycsw load -p /etc/ckan/pycsw.cfg >> /var/log/ckan-pycsw-loader.log 2>&1 && /usr/lib/ckan/bin/paster --plugin=ckanext-datastorecsw datastore-pycsw load -p /etc/ckan/pycsw.cfg >> /var/log/ckan-datastore-pycsw-loader.log
+0 1 * * * root /usr/lib/ckan/bin/paster --plugin=ckanext-spatial ckan-pycsw load -p /etc/ckan/pycsw.cfg >> /var/log/ckan-pycsw-loader.log 2>&1 && /usr/lib/ckan/bin/paster --plugin=ckanext-datastorecsw datastore-pycsw load -p /etc/ckan/pycsw.cfg >> /var/log/ckan-datastore-pycsw-loader.log 2>&1
