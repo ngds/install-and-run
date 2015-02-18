@@ -120,7 +120,7 @@
       action: command chdir=/usr/lib/ckan/src/ckanext-ogcpreview/ ../../bin/python setup.py develop
 
     - name: get datastorecsw extension
-      action: git repo=https://github.com/ngds/ckanext-datastorecsw dest=/usr/lib/ckan/src/ckanext-datastorecsw
+      action: git repo=https://github.com/REI-Systems/ckanext-datastorecsw dest=/usr/lib/ckan/src/ckanext-datastorecsw version=build
 
     - name: install requirements for datastorecsw
       action: pip requirements=/usr/lib/ckan/src/ckanext-datastorecsw/requirements.txt virtualenv=/usr/lib/ckan/
