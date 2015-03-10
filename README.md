@@ -116,7 +116,30 @@ If you're on Windows you can follow the directions below to set up the PuTTY SSH
 
 When NGDS releases new rpm, you can upgrade exisitng NGDS ckan application with the following command:
 
-    yum install ngds.ckan
+    yum update ngds.ckan
+
+Go to folder /etc/ckan, and check for file `production.ini.rpmnew`. If the file is present, you will need to replace file `production.ini` with this rpmnew file, and make appropriate config changes that you have previouly done. After done, delete `production.ini.rpmnew`. Restart server.
+
+**Notice for updating from rpm versions prior to version 300:**
+The installation steps have changed. Follow the instruction and update the two config files (/etc/ckan/production.ini and /var/lib/tomcat6/webapps/geoserver/data/global.xml) as mentioned above. Also some mannual database changes need to done if you come from rpm 300 and before:
+
+    cd /tmp
+    sudo -u postgres createdb -O ckan_default pycsw -E utf-8
+
+    sudo -u postgres psql -d datastore_default -f /usr/pgsql-9.1/share/contrib/postgis-1.5/postgis.sql > /dev/null
+    sudo -u postgres psql -d datastore_default -f /usr/pgsql-9.1/share/contrib/postgis-1.5/spatial_ref_sys.sql > /dev/null
+    sudo -u postgres psql -d datastore_default -c 'GRANT SELECT, UPDATE, INSERT, DELETE ON spatial_ref_sys TO ckan_default' > /dev/null
+    sudo -u postgres psql -d datastore_default -c 'GRANT SELECT, UPDATE, INSERT, DELETE ON geometry_columns TO ckan_default' > /dev/null
+    sudo -u postgres psql -d pycsw -f /usr/pgsql-9.1/share/contrib/postgis-1.5/postgis.sql > /dev/null
+    sudo -u postgres psql -d pycsw -f /usr/pgsql-9.1/share/contrib/postgis-1.5/spatial_ref_sys.sql > /dev/null
+    sudo -u postgres psql -d pycsw -c 'GRANT SELECT, UPDATE, INSERT, DELETE ON spatial_ref_sys TO ckan_default' > /dev/null
+    sudo -u postgres psql -d pycsw -c 'GRANT SELECT, UPDATE, INSERT, DELETE ON geometry_columns TO ckan_default' > /dev/null
+
+
+    cd /usr/lib/ckan/src/ckanext-spatial
+    ../../bin/paster --plugin=ckanext-spatial ckan-pycsw setup -p /etc/ckan/pycsw.cfg
+
+Restart server after done.
 
 ### Sysadmin
 
