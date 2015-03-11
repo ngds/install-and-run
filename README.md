@@ -53,8 +53,8 @@ To install the NGDS ckan on a CentOS box, run the following commands. For now, u
     yum update -y ca-certificates
 
     cd /etc/yum.repos.d/
-    curl -fsLOS http://packages.reisys.com/libxml2.repo
-    curl -fsLOS http://packages.reisys.com/ngds.repo
+    curl -fsLOS http://packages.reisys.com/ckan/ngds/libxml2.repo
+    curl -fsLOS http://packages.reisys.com/ckan/ngds/ngds.repo
 
     rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
     rpm -Uvh http://yum.postgresql.org/9.1/redhat/rhel-6.3-x86_64/pgdg-centos91-9.1-4.noarch.rpm
