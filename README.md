@@ -48,13 +48,13 @@
 
 ### Installation:
 
-To install the NGDS ckan on a CentOS box, run the following commands. For now, use yum.tigbox.com for NGDS-RPM-SERVER:
+To install the NGDS ckan on a CentOS box, run the following commands. For now, use packages.reisys.com for NGDS-RPM-SERVER:
 
     yum update -y ca-certificates
 
     cd /etc/yum.repos.d/
-    curl -fsLOS http://NGDS-RPM-SERVER/libxml2.repo
-    curl -fsLOS http://NGDS-RPM-SERVER/ngds.repo
+    curl -fsLOS http://packages.reisys.com/libxml2.repo
+    curl -fsLOS http://packages.reisys.com/ngds.repo
 
     rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
     rpm -Uvh http://yum.postgresql.org/9.1/redhat/rhel-6.3-x86_64/pgdg-centos91-9.1-4.noarch.rpm
@@ -121,7 +121,7 @@ When NGDS releases new rpm, you can upgrade exisitng NGDS ckan application with 
 Go to folder /etc/ckan, and check for file `production.ini.rpmnew`. If the file is present, you will need to replace file `production.ini` with this rpmnew file, and make appropriate config changes that you have previouly done. After done, delete `production.ini.rpmnew`. Restart server.
 
 **Notice for updating from rpm versions prior to version 300:**
-The installation steps have changed. Follow the instruction and update the two config files (/etc/ckan/production.ini and /var/lib/tomcat6/webapps/geoserver/data/global.xml) as mentioned above. Also some mannual database changes need to done if you come from rpm 300 and before:
+The installation steps have changed. Follow the instruction and update the two config files (`/etc/ckan/production.ini` and `/var/lib/tomcat6/webapps/geoserver/data/global.xml`) as mentioned above. If there is no `<proxyBaseUrl>` tag at the top of the file global.xml, you will need to get the new file from /var/tmp/geoserver.global.xml and move it to /var/lib/tomcat6/webapps/geoserver/data/global.xml. Also make sure file permission is right by doing `chown tomcat:tomcat /var/lib/tomcat6/webapps/geoserver/data/global.xml`. Some manual database changes need to done if you come from rpm 300 and before:
 
     cd /tmp
     sudo -u postgres createdb -O ckan_default pycsw -E utf-8
