@@ -75,6 +75,7 @@ if [ ! -f /usr/share/tomcat6/webapps/solr.war ]; then
   cd /var/solr
   tar zxf /var/tmp/ngds.solr.tgz
   cp -f /var/tmp/schema.xml /var/solr/ngds/conf/schema.xml
+  cp -f /var/tmp/solrconfig.xml /var/solr/ngds/conf/solrconfig.xml
   chown -R tomcat:tomcat /var/solr/
 
   service tomcat6 start
@@ -140,6 +141,12 @@ fi
 if [ $(diff /var/tmp/schema.xml /var/solr/ngds/conf/schema.xml | wc -l) -gt 0 ]; then
   service tomcat6 stop
   cp -f /var/tmp/schema.xml /var/solr/ngds/conf/schema.xml
+fi
+
+# update solrconfig.xml if needed
+if [ $(diff /var/tmp/solrconfig.xml /var/solr/ngds/conf/solrconfig.xml | wc -l) -gt 0 ]; then
+  service tomcat6 stop
+  cp -f /var/tmp/solrconfig.xml /var/solr/ngds/conf/solrconfig.xml
 fi
 
 # prepare ckan DB

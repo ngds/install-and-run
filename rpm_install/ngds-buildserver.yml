@@ -193,6 +193,7 @@
         - var/tmp/datastore_permissions.sql
         - var/tmp/ngds.solr.tgz
         - var/tmp/solr.web.xml
+        - var/tmp/solrconfig.xml
         - var/tmp/schema.xml
         - var/tmp/geoserver.global.xml
 
