@@ -150,3 +150,20 @@ Restart server after done.
 ### Restarting Apache
 
     /etc/init.d/httpd restart
+### Troubleshooting
+####Datapusher fails to push data to the datastore
+#####Possible Error messages:
+  
+  1. `ConnectionError(ProtocolError('Connection aborted.', error(110, 'Connection timed out')))`
+  1. `could not post to result_url`
+  
+#####Possible resolutions:
+
+  1. Make sure that the datapusher service is on and apache is listening on port 8800
+  i.e. `curl 0.0.0.0:8800`
+  1. Make sure that datapusher can push data to the datastore.
+  i.e. `curl {public_ip_address or hostname}`
+
+#####More information on how datapusher & datastore work together can be found here: 
+
+https://github.com/ckan/datapusher/issues/18
