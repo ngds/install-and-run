@@ -1,2 +1,2 @@
 */15 * * * * root ckan --plugin=ckanext-harvest harvester run -c /etc/ckan/production.ini >> /var/log/harvester_run.log 2>&1
-*/5 * * * * root ckan --plugin=ckanext-ngds  ngds clean-deleted -c /etc/ckan/production.ini >> /var/log/harvest_source_hard_delete.log 2>&1
+*/5 * * * * root ckan --plugin=ckanext-ngds  ngds purge-deleted-harvest-sources -c /etc/ckan/production.ini >> /var/log/purge_deleted_harvest_sources.log 3>&1
