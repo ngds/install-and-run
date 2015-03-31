@@ -66,7 +66,7 @@ To install the NGDS ckan on a CentOS box, run the following commands. For now, u
 
 After all steps completed, you should be able to access the NGDS ckan application via http://CENTOS-IP-ADDRESS/.
 
-After all the steps please update two config files. Update "ckan.hostname" variable with correct URL in file /etc/ckan/production.ini, and update proxyBaseUrl in file /var/lib/tomcat6/webapps/geoserver/data/global.xml, replacing 127.0.0.1 with correct URL. Restart server after update.
+After all the steps please update two config files. Update "ckan.hostname" & "ngds.aggregator_url" (no trailing slash) variables with correct URLs in file /etc/ckan/production.ini, and update proxyBaseUrl in file /var/lib/tomcat6/webapps/geoserver/data/global.xml, replacing 127.0.0.1 with correct URL. Restart server after update.
 
 **Important!** The default sysadmin password must be changed immediately. Upon the completion of setup login to the web interface with the default user `admin`. The password is `admin`. In the user settings change the password to something more secure.
 
