@@ -12,10 +12,9 @@
   - For pricing see [Amazon EC2 Pricing](http://aws.amazon.com/ec2/pricing/), and if using the recommended settings look under On-Demand Instance Prices for US East (N. Virginia) and the t2.medium instance. Also see Amazon EBS Magnetic volumes under Amazon Elastic Block Store, US East (N. Virginia) for pricing for the recommended 50GB storage.
 1. After logging in, navigate to the EC2 page.
 1. In the top right corner make sure **US East (N. Virginia)** is selected as the region.
-1. In the EC2 Dashboard (on the left), under Images click **AMIs**.
-1. Change the Filter to **Public Images**.
-1. Search for **NGDS**.
-1. Select the AMI found, NGDS CKAN, and then click the **Launch** button.
+1. Click on **Launch Instance**.
+1. Select **AWS Marketplace**.
+1. Search for **CentOS 6.4 (x86_64) - Release Media** and the click **Select**.
 1. Choose **t2.medium** as the Instance Type in Step 2.
 1. Click the button at the bottom **Next: Configure Instance Details**.
 1. Don't make any changes and click the **Next: Add Storage** button.
