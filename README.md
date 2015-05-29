@@ -15,7 +15,7 @@
 1. Click on **Launch Instance**.
 1. Select **AWS Marketplace**.
 1. Search for **CentOS 6.4 (x86_64) - Release Media** and the click **Select**.
-1. Choose **t2.medium** as the Instance Type in Step 2.
+1. Choose **m3.medium (or higher)** as the Instance Type in Step 2.
 1. Click the button at the bottom **Next: Configure Instance Details**.
 1. Don't make any changes and click the **Next: Add Storage** button.
 1. Modify the **Size** of the Root to at least **50GB**.
