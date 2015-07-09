@@ -166,3 +166,12 @@ Restart server after done.
 #####More information on how datapusher & datastore work together can be found here: 
 
 https://github.com/ckan/datapusher/issues/18
+
+####Can't install RPM
+#####Possible Error message:
+
+`Cannot retrieve metalink for repository: epel. Please verify its path and try again`
+
+#####Possible resolutions: 
+
+Run `yum upgrade ca-certificates --disablerepo=epel`
