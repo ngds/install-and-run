@@ -174,4 +174,9 @@ https://github.com/ckan/datapusher/issues/18
 
 #####Possible resolutions: 
 
-Run `yum upgrade ca-certificates --disablerepo=epel`
+Run `yum upgrade ca-certificates --disablerepo=epel`  
+  
+####After CentOS server is moved, the server stops responding  
+   
+If you have a Centos virtual machine installed in Hyper-V and think that you might clone or move the virtual machine in the future, you should set a static MAC address on the virtual network card.  Otherwise the Centos OS will add a new network  card if the virtual machine is cloned or moved to another Hyper-V server and the network will stop functioning. 
+
