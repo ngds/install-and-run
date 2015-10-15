@@ -78,7 +78,7 @@
       action: command chdir=/usr/lib/ckan/src/ckanext-harvest/ ../../bin/python setup.py develop
 
     - name: get spatial extension
-      action: git repo=https://github.com/NGDS/ckanext-spatial dest=/usr/lib/ckan/src/ckanext-spatial version=rpm-build
+      action: git repo=https://github.com/NGDS/ckanext-spatial dest=/usr/lib/ckan/src/ckanext-spatial version=gdr-descriptors
 
     - name: install requirements for spatial
       action: pip requirements=/usr/lib/ckan/src/ckanext-spatial/pip-requirements.txt virtualenv=/usr/lib/ckan/
@@ -138,7 +138,7 @@
       action: command chdir=/usr/lib/ckan/src/ckanext-metadata/ ../../bin/python setup.py develop
 
     - name: get geoserver extension
-      action: git repo=https://github.com/NGDS/ckanext-geoserver dest=/usr/lib/ckan/src/ckanext-geoserver version=master
+      action: git repo=https://github.com/NGDS/ckanext-geoserver dest=/usr/lib/ckan/src/ckanext-geoserver version=gdr-descriptors
 
     - name: install requirements for geoserver
       action: pip requirements=/usr/lib/ckan/src/ckanext-geoserver/requirements.txt virtualenv=/usr/lib/ckan/
