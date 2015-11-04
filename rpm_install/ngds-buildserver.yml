@@ -129,7 +129,7 @@
       action: command chdir=/usr/lib/ckan/src/ckanext-datastorecsw/ ../../bin/python setup.py develop
 
     - name: get metadata extension
-      action: git repo=https://github.com/NGDS/ckanext-metadata dest=/usr/lib/ckan/src/ckanext-metadata version=master
+      action: git repo=https://github.com/NGDS/ckanext-metadata dest=/usr/lib/ckan/src/ckanext-metadata version=usgin-model-fix
 
     - name: install requirements for metadata
       action: pip requirements=/usr/lib/ckan/src/ckanext-metadata/requirements.txt virtualenv=/usr/lib/ckan/
