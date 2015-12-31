@@ -31,15 +31,13 @@
 1. Click the **Launch Instances** button.
 1. On the Launch Status page click the **View Instances** button to see a list of your instances.
 1. Note the IP address in the **Public IP** column for this new instance. Once the launch has completed (it will take several minutes) you will be able to see your node at this IP address in any web browser.
-1. Extending a Linux File System
+1. Extending a Linux File System- For some reason by default you don’t get all the file space so you need to extend the file system
   - In Linux, you use a file system-specific command to resize the file system to the larger size of the new volume. This command works even if the volume you wish to extend is the root volume. For ext2, ext3, and ext4 file systems, this command is resize2fs. For XFS file systems, this command is xfs_growfs. For other file systems, refer to the specific documentation for those file systems for instructions on extending them.
   - If you are unsure of which file system you are using, you can use the file -s command to list the file system data for a device.
-  - The following example shows a Linux ext4 file system and an SGI XFS file system:
-  
+  - The following example shows a Linux ext4 file system and an SGI XFS file system:  
     [ec2-user ~]$ sudo file -s /dev/xvd*  
     /dev/xvda1: Linux rev 1.0 ext4 filesystem data ...  
-    /dev/xvdf:  SGI XFS filesystem data ... 
-
+    /dev/xvdf:  SGI XFS filesystem data ...   
 1. **Important!** Make sure these steps are completed immediately after launch.
   - At the NGDS landing page click **Sign In**.
   - Login with the default sysadmin account. The user is `admin` and the password is `admin`.
